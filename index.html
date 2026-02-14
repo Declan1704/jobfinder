@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Diksha ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            font-family: 'Georgia', serif;
+        }
+
+        /* Animated Gradient Background */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee, #ffecd2, #fcb69f);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        /* Floating Hearts Background */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: float linear infinite;
+            pointer-events: none;
+        }
+
+        /* Glowing Button */
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 105, 180, 0.5),
+                            0 0 40px rgba(255, 105, 180, 0.3),
+                            0 0 60px rgba(255, 105, 180, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 105, 180, 0.8),
+                            0 0 60px rgba(255, 105, 180, 0.5),
+                            0 0 90px rgba(255, 105, 180, 0.3);
+            }
+        }
+
+        .glow-button {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Heartbeat Animation */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        /* Pop Animation */
+        @keyframes pop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Fade Transitions */
+        .fade-enter {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.8s ease;
+        }
+
+        .fade-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .fade-exit-active {
+            opacity: 0;
+            transform: scale(1.1);
+            transition: all 0.8s ease;
+        }
+
+        /* Typewriter Effect */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: currentColor;
+            animation: blink 1s step-end infinite;
+        }
+
+        /* Confetti Animation */
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        /* Rose Petals */
+        @keyframes petal-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .petal {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.8;
+            animation: petal-fall 8s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Sparkles */
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        /* Cursor Trail Hearts */
+        .cursor-heart {
+            position: fixed;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: cursorHeartFade 1s ease-out forwards;
+        }
+
+        @keyframes cursorHeartFade {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-50px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Click Effect Text */
+        @keyframes floatText {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        .float-text {
+            position: absolute;
+            animation: floatText 2s ease-out forwards;
+            pointer-events: none;
+            font-weight: bold;
+            color: #ff1493;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Game Hearts */
+        .game-heart {
+            position: absolute;
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+
+        .game-heart:hover {
+            transform: scale(1.2);
+        }
+
+        /* Hearts Explosion */
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .explode-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        /* Zoom Effect */
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .zoom-in {
+            animation: zoomIn 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="animated-gradient min-h-screen">
+
+    <!-- Floating Hearts Background -->
+    <div id="floatingHearts"></div>
+
+    <!-- Cursor Trail Container -->
+    <div id="cursorTrail"></div>
+
+    <!-- Section 1: Landing Screen -->
+    <section id="landingScreen" class="min-h-screen flex items-center justify-center relative">
+        <div class="text-center z-10 px-4">
+            <h1 class="text-6xl md:text-8xl font-bold text-white mb-6 heartbeat" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.3);">
+                Hey Diksha ❤️
+            </h1>
+            <p class="text-2xl md:text-3xl text-white mb-12" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                I made something special for you…
+            </p>
+            <button id="startBtn" class="glow-button bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all transform hover:scale-110">
+                Start the Surprise 💌
+            </button>
+        </div>
+    </section>
+
+    <!-- Section 2: Game Screen -->
+    <section id="gameScreen" class="min-h-screen flex flex-col items-center justify-center relative hidden">
+        <div class="glass rounded-3xl p-8 mb-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Catch the Love 💕</h2>
+            <p class="text-xl text-white mb-4">Click 10 hearts before time runs out!</p>
+            <div class="flex justify-center gap-8 text-2xl font-bold text-white">
+                <div>Score: <span id="score">0</span>/10</div>
+                <div>Time: <span id="timer">20</span>s</div>
+            </div>
+        </div>
+        <div id="gameArea" class="relative w-full h-96"></div>
+    </section>
+
+    <!-- Section 3: Losing Screen -->
+    <section id="losingScreen" class="min-h-screen flex items-center justify-center relative hidden">
+        <div class="text-center z-10 px-4">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.3);">
+                Try again… 🥺
+            </h1>
+            <p class="text-2xl md:text-3xl text-white mb-12" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                My love deserves full effort 😌❤️
+            </p>
+            <button id="retryBtn" class="glow-button bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all transform hover:scale-110">
+                Try Again 💪
+            </button>
+        </div>
+    </section>
+
+    <!-- Section 4: Winning Screen -->
+    <section id="winningScreen" class="min-h-screen flex items-center justify-center relative hidden">
+        <div id="confettiContainer"></div>
+        <div id="petalContainer"></div>
+        <div id="sparkleContainer"></div>
+        
+        <div class="text-center z-10 px-4 zoom-in">
+            <div id="messageContainer" class="mb-12">
+                <h1 id="message1" class="text-5xl md:text-7xl font-bold text-white mb-8 heartbeat opacity-0" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.3);">
+                    Happy Valentine's Day Diksha ❤️
+                </h1>
+                <h2 id="message2" class="text-4xl md:text-6xl font-bold text-white mb-8 opacity-0" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.3);">
+                    I am sorry.
+                </h2>
+                <h2 id="message3" class="text-4xl md:text-6xl font-bold text-white mb-8 opacity-0" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.3);">
+                    Please forgive me.
+                </h2>
+                <h2 id="message4" class="text-3xl md:text-5xl font-bold text-white mb-8 opacity-0" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.3);">
+                    I love you more than words can ever say.
+                </h2>
+            </div>
+            <button id="finalBtn" class="glow-button bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all transform hover:scale-110 opacity-0">
+                Forever Yours ❤️
+            </button>
+        </div>
+    </section>
+
+    <script>
+        // Cursor Trail Hearts
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.9) {
+                const heart = document.createElement('div');
+                heart.className = 'cursor-heart';
+                heart.textContent = '❤️';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                document.getElementById('cursorTrail').appendChild(heart);
+                setTimeout(() => heart.remove(), 1000);
+            }
+        });
+
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        // Section Transitions
+        function showSection(sectionId) {
+            const sections = ['landingScreen', 'gameScreen', 'losingScreen', 'winningScreen'];
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (id === sectionId) {
+                    section.classList.remove('hidden');
+                    section.classList.add('fade-enter');
+                    setTimeout(() => section.classList.add('fade-enter-active'), 10);
+                } else {
+                    section.classList.add('fade-exit');
+                    setTimeout(() => {
+                        section.classList.add('hidden');
+                        section.classList.remove('fade-exit', 'fade-enter', 'fade-enter-active');
+                    }, 800);
+                }
+            });
+        }
+
+        // Game Logic
+        let score = 0;
+        let timeLeft = 20;
+        let gameInterval;
+        let timerInterval;
+        const loveMessages = [
+            "I Miss You ❤️",
+            "You Mean Everything",
+            "Please Forgive Me 🥺",
+            "You Are My World",
+            "Forever Yours 💕",
+            "My Everything ✨",
+            "I Love You 💖",
+            "You Complete Me 🌹"
+        ];
+
+        function startGame() {
+            score = 0;
+            timeLeft = 20;
+            document.getElementById('score').textContent = score;
+            document.getElementById('timer').textContent = timeLeft;
+            
+            showSection('gameScreen');
+            
+            gameInterval = setInterval(spawnHeart, 800);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    endGame(false);
+                }
+            }, 1000);
+        }
+
+        function spawnHeart() {
+            const gameArea = document.getElementById('gameArea');
+            const heart = document.createElement('div');
+            heart.className = 'game-heart';
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * (gameArea.offsetWidth - 50) + 'px';
+            heart.style.top = Math.random() * (gameArea.offsetHeight - 50) + 'px';
+            
+            heart.addEventListener('click', () => {
+                score++;
+                document.getElementById('score').textContent = score;
+                
+                // Show floating text
+                const text = document.createElement('div');
+                text.className = 'float-text';
+                text.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+                text.style.left = heart.style.left;
+                text.style.top = heart.style.top;
+                text.style.fontSize = '24px';
+                gameArea.appendChild(text);
+                setTimeout(() => text.remove(), 2000);
+                
+                heart.remove();
+                
+                if (score >= 10) {
+                    endGame(true);
+                }
+            });
+            
+            gameArea.appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentElement) {
+                    heart.remove();
+                }
+            }, 2000);
+        }
+
+        function endGame(won) {
+            clearInterval(gameInterval);
+            clearInterval(timerInterval);
+            document.getElementById('gameArea').innerHTML = '';
+            
+            if (won) {
+                setTimeout(() => showWinningScreen(), 500);
+            } else {
+                showSection('losingScreen');
+            }
+        }
+
+        // Winning Screen Animation
+        function showWinningScreen() {
+            showSection('winningScreen');
+            createConfetti();
+            createPetals();
+            createSparkles();
+            animateMessages();
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#ff1493', '#ff69b4', '#ffc0cb', '#ff6347', '#ff4500'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                container.appendChild(confetti);
+            }
+        }
+
+        function createPetals() {
+            const container = document.getElementById('petalContainer');
+            for (let i = 0; i < 30; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.textContent = '🌸';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDelay = Math.random() * 4 + 's';
+                petal.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                container.appendChild(petal);
+            }
+        }
+
+        function createSparkles() {
+            const container = document.getElementById('sparkleContainer');
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(sparkle);
+            }
+        }
+
+        function animateMessages() {
+            const messages = ['message1', 'message2', 'message3', 'message4'];
+            messages.forEach((id, index) => {
+                setTimeout(() => {
+                    const element = document.getElementById(id);
+                    element.style.transition = 'opacity 1s ease-in';
+                    element.style.opacity = '1';
+                }, index * 2500);
+            });
+            
+            setTimeout(() => {
+                const btn = document.getElementById('finalBtn');
+                btn.style.transition = 'opacity 1s ease-in';
+                btn.style.opacity = '1';
+            }, messages.length * 2500);
+        }
+
+        function heartsExplosion() {
+            const container = document.getElementById('winningScreen');
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'explode-heart';
+                heart.textContent = '❤️';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                const angle = (Math.PI * 2 * i) / 50;
+                const distance = 300;
+                heart.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                heart.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 1500);
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('startBtn').addEventListener('click', () => {
+            startGame();
+        });
+
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            startGame();
+        });
+
+        document.getElementById('finalBtn').addEventListener('click', () => {
+            heartsExplosion();
+            setTimeout(() => {
+                heartsExplosion();
+            }, 500);
+            setTimeout(() => {
+                heartsExplosion();
+            }, 1000);
+        });
+
+        // Initialize
+        createFloatingHearts();
+    </script>
+</body>
+</html>
