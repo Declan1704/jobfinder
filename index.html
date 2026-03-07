@@ -1,1437 +1,849 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Diksha ❤️</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            background: #000;
-            color: #fff;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Particle Canvas */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Scene Container */
-        .scene {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 2rem;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
-        }
-
-        .scene.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Scene 1 - Dark Beginning */
-        #scene1 {
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
-            animation: bgShift 3s ease-in-out forwards;
-        }
-
-        @keyframes bgShift {
-            from {
-                background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
-            }
-            to {
-                background: linear-gradient(180deg, #1a1a2e 0%, #2d1b3d 100%);
-            }
-        }
-
-        /* Scene 2 - College Days */
-        #scene2 {
-            background: linear-gradient(135deg, #2d1b3d 0%, #3d2645 50%, #4a2c52 100%);
-            position: relative;
-        }
-
-        #scene2::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path d="M0 400 Q 300 350 600 400 T 1200 400 V 600 H 0 Z" fill="%23ffffff" opacity="0.03"/></svg>') no-repeat bottom;
-            background-size: cover;
-            opacity: 0.5;
-            animation: parallaxMove 20s ease-in-out infinite;
-        }
-
-        @keyframes parallaxMove {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-20px); }
-        }
-
-        /* Scene 3 - Transformation */
-        #scene3 {
-            background: linear-gradient(135deg, #4a2c52 0%, #d4497c 50%, #f77da9 100%);
-        }
-
-        /* Scene 4 - Interactive */
-        #scene4 {
-            background: linear-gradient(135deg, #f77da9 0%, #e94c89 50%, #d4497c 100%);
-        }
-
-        /* Scene 5 - Final Confession */
-        #scene5 {
-            background: linear-gradient(45deg, #d4497c, #f77da9, #ff6b9d, #ffa5c5);
-            background-size: 400% 400%;
-            animation: auroraFlow 15s ease infinite;
-        }
-
-        @keyframes auroraFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Typewriter Effect */
-        .typewriter {
-            overflow: hidden;
-            border-right: 3px solid rgba(255, 255, 255, 0.75);
-            white-space: nowrap;
-            animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
-            display: inline-block;
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: rgba(255, 255, 255, 0.75); }
-        }
-
-        /* Fade In Text */
-        .fade-in-text {
-            opacity: 0;
-            animation: fadeInUp 1.5s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Glowing Text */
-        .glow-text {
-            text-shadow: 0 0 20px rgba(255, 107, 157, 0.8),
-                         0 0 40px rgba(255, 107, 157, 0.6),
-                         0 0 60px rgba(255, 107, 157, 0.4);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 20px rgba(255, 107, 157, 0.8),
-                             0 0 40px rgba(255, 107, 157, 0.6),
-                             0 0 60px rgba(255, 107, 157, 0.4);
-            }
-            to {
-                text-shadow: 0 0 30px rgba(255, 107, 157, 1),
-                             0 0 60px rgba(255, 107, 157, 0.8),
-                             0 0 90px rgba(255, 107, 157, 0.6);
-            }
-        }
-
-        /* Glitch Effect */
-        .glitch {
-            animation: glitch 0.5s ease-in-out;
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-        }
-
-        /* Heartbeat Animation */
-        .heartbeat {
-            animation: heartbeat 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            10%, 30% { transform: scale(1.1); }
-            20%, 40% { transform: scale(1); }
-        }
-
-        /* Floating Animation */
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Glassmorphism Card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Button Styles */
-        .romantic-btn {
-            background: linear-gradient(135deg, #ff6b9d 0%, #d4497c 100%);
-            color: white;
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            border: none;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .romantic-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .romantic-btn:hover::before {
-            left: 100%;
-        }
-
-        .romantic-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
-        }
-
-        /* Heart Trail */
-        .heart-trail {
-            position: fixed;
-            pointer-events: none;
-            font-size: 20px;
-            animation: heartFall 2s ease-in forwards;
-            z-index: 9999;
-        }
-
-        @keyframes heartFall {
-            0% {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) rotate(360deg);
-            }
-        }
-
-        /* Floating Hearts */
-        .floating-heart {
-            position: absolute;
-            font-size: 30px;
-            animation: floatUp 8s ease-in infinite;
-            opacity: 0;
-        }
-
-        @keyframes floatUp {
-            0% {
-                opacity: 0;
-                transform: translateY(0) scale(0);
-            }
-            10% {
-                opacity: 1;
-                transform: translateY(-50px) scale(1);
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-1000px) scale(0.5);
-            }
-        }
-
-        /* Sparkle Effect */
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            animation: sparkle 2s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Confetti */
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #ff6b9d;
-            animation: confettiFall 3s ease-in forwards;
-            z-index: 1000;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(100vh) rotate(720deg);
-            }
-        }
-
-        /* Zoom In Effect */
-        .zoom-in {
-            animation: zoomIn 2s ease forwards;
-        }
-
-        @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Text Line Animations */
-        .line {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .line.show {
-            animation: lineReveal 1s ease forwards;
-        }
-
-        @keyframes lineReveal {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Loading Screen */
-        #loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 1s ease;
-        }
-
-        #loading.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader-heart {
-            font-size: 60px;
-            animation: heartbeat 1s ease-in-out infinite;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .scene {
-                padding: 1rem;
-            }
-            
-            .romantic-btn {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem !important;
-            }
-
-            h2 {
-                font-size: 1.5rem !important;
-            }
-
-            p {
-                font-size: 1rem !important;
-            }
-
-            .characters-container,
-            .couple-animation,
-            .couple-holding-hands,
-            .forever-couple,
-            .dancing-couple {
-                transform: scale(0.8);
-            }
-        }
-
-        /* === CHARACTER ANIMATIONS === */
-
-        /* Falling Stars - Scene 1 */
-        .star-container {
-            position: relative;
-            height: 100px;
-            width: 100%;
-        }
-
-        .falling-star {
-            position: absolute;
-            font-size: 30px;
-            animation: starFall 3s ease-in-out infinite;
-            opacity: 0;
-        }
-
-        @keyframes starFall {
-            0% {
-                opacity: 0;
-                transform: translateY(-100px) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(200px) rotate(360deg);
-            }
-        }
-
-        /* Scene 2 - College Characters */
-        .characters-container {
-            position: relative;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 3rem;
-        }
-
-        .character {
-            position: relative;
-            animation: slideIn 2s ease forwards;
-        }
-
-        .boy-lost {
-            animation: boyAppear 2s ease forwards, sway 2s ease-in-out infinite 2s;
-        }
-
-        @keyframes boyAppear {
-            from {
-                opacity: 0;
-                transform: translateX(-100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes sway {
-            0%, 100% { transform: translateX(0) rotate(-2deg); }
-            50% { transform: translateX(-5px) rotate(2deg); }
-        }
-
-        .char-head {
-            font-size: 60px;
-            margin-bottom: 10px;
-            animation: headBob 2s ease-in-out infinite;
-        }
-
-        @keyframes headBob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .char-torso {
-            width: 40px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .char-torso.girl {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .thought-bubble {
-            position: absolute;
-            top: -30px;
-            right: -40px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 50%;
-            font-size: 24px;
-            animation: bubblePop 2s ease-in-out infinite;
-        }
-
-        @keyframes bubblePop {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
-
-        /* Toxic Shadows */
-        .toxic-shadows {
-            position: absolute;
-            left: 30%;
-        }
-
-        .shadow-person {
-            position: absolute;
-            font-size: 40px;
-            color: rgba(0, 0, 0, 0.5);
-            animation: shadowFade 3s ease forwards;
-        }
-
-        @keyframes shadowFade {
-            0% {
-                opacity: 0.7;
-                filter: blur(0px);
-            }
-            100% {
-                opacity: 0;
-                filter: blur(10px);
-                transform: translateX(-50px);
-            }
-        }
-
-        /* Girl Hero Entrance */
-        .girl-hero {
-            animation: heroEntrance 2s ease forwards 3s;
-            opacity: 0;
-        }
-
-        @keyframes heroEntrance {
-            0% {
-                opacity: 0;
-                transform: translateX(200px) scale(0.5);
-            }
-            60% {
-                opacity: 1;
-                transform: translateX(-10px) scale(1.1);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-        }
-
-        .char-glow {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: glowPulse 2s ease-in-out infinite;
-            border-radius: 50%;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
-        }
-
-        .book-icon {
-            position: absolute;
-            bottom: -40px;
-            font-size: 30px;
-            animation: bookFloat 2s ease-in-out infinite;
-        }
-
-        @keyframes bookFloat {
-            0%, 100% { transform: translateY(0) rotate(-10deg); }
-            50% { transform: translateY(-10px) rotate(10deg); }
-        }
-
-        /* Scene 3 - Couple Growing Together */
-        .couple-animation {
-            position: relative;
-            height: 200px;
-            margin-bottom: 2rem;
-        }
-
-        .couple-growing {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 60px;
-            animation: coupleGrow 3s ease forwards;
-        }
-
-        @keyframes coupleGrow {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .person-left, .person-right {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: personHappy 2s ease-in-out infinite;
-        }
-
-        @keyframes personHappy {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .person-head {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-
-        .person-body {
-            width: 35px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-        }
-
-        .person-body.girl {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .connecting-hearts {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .heart-pulse {
-            font-size: 25px;
-            animation: heartPulseAnim 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartPulseAnim {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
-        }
-
-        .transformation-icons {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .transform-icon {
-            position: absolute;
-            font-size: 35px;
-            animation: iconOrbit 4s ease-in-out infinite;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        @keyframes iconOrbit {
-            0% {
-                opacity: 0;
-                transform: scale(0) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2) rotate(180deg);
-            }
-            100% {
-                opacity: 0.7;
-                transform: scale(1) rotate(360deg);
-            }
-        }
-
-        /* Scene 4 - Holding Hands */
-        .couple-holding-hands {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            height: 150px;
-            animation: coupleAppear 2s ease forwards;
-        }
-
-        @keyframes coupleAppear {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .holding-person {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-
-        .holding-head {
-            font-size: 50px;
-            margin-bottom: 10px;
-            animation: holdingHappy 1.5s ease-in-out infinite;
-        }
-
-        @keyframes holdingHappy {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .holding-body {
-            width: 35px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-        }
-
-        .holding-body.girl {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .holding-arm {
-            position: absolute;
-            width: 40px;
-            height: 8px;
-            background: #ffd1dc;
-            top: 65px;
-            border-radius: 5px;
-        }
-
-        .holding-person.left .holding-arm {
-            right: -25px;
-            transform-origin: left;
-            animation: armSwing 1s ease-in-out infinite;
-        }
-
-        .holding-person.right .holding-arm {
-            left: -25px;
-            transform-origin: right;
-            animation: armSwing 1s ease-in-out infinite;
-        }
-
-        @keyframes armSwing {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(-10deg); }
-        }
-
-        .holding-heart {
-            font-size: 40px;
-            animation: holdingHeartBeat 1s ease-in-out infinite;
-        }
-
-        @keyframes holdingHeartBeat {
-            0%, 100% { transform: scale(1); }
-            25%, 75% { transform: scale(1.2); }
-            50% { transform: scale(1); }
-        }
-
-        /* Roses Floating */
-        .roses-floating {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .rose {
-            position: absolute;
-            font-size: 35px;
-            animation: roseFloat 4s ease-in-out infinite;
-            opacity: 0;
-        }
-
-        @keyframes roseFloat {
-            0%, 100% {
-                opacity: 0;
-                transform: translateY(100px) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-50px) rotate(180deg);
-            }
-        }
-
-        /* Scene 5 - Forever Couple */
-        .forever-couple {
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .infinity-path {
-            position: relative;
-            animation: infinityAppear 2s ease forwards;
-        }
-
-        @keyframes infinityAppear {
-            from {
-                opacity: 0;
-                transform: scale(0);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .infinity-symbol {
-            font-size: 120px;
-            color: rgba(255, 255, 255, 0.3);
-            animation: infinityGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes infinityGlow {
-            0%, 100% {
-                text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
-            }
-            50% {
-                text-shadow: 0 0 40px rgba(255, 107, 157, 1);
-            }
-        }
-
-        .couple-on-infinity {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            gap: 10px;
-        }
-
-        .mini-person {
-            font-size: 40px;
-            animation: miniPersonFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes miniPersonFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* Final Scene - Dancing Couple */
-        .dancing-couple {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            position: relative;
-        }
-
-        .dancer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .left-dancer {
-            animation: danceLeft 1s ease-in-out infinite;
-        }
-
-        .right-dancer {
-            animation: danceRight 1s ease-in-out infinite;
-        }
-
-        @keyframes danceLeft {
-            0%, 100% {
-                transform: translateY(0) rotate(-5deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-        }
-
-        @keyframes danceRight {
-            0%, 100% {
-                transform: translateY(0) rotate(5deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(-5deg);
-            }
-        }
-
-        .dancer-head {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-
-        .dancer-body {
-            width: 35px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-        }
-
-        .dancer-body.girl {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .music-notes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .music-notes span {
-            position: absolute;
-            font-size: 30px;
-            animation: musicFloat 2s ease-in-out infinite;
-            opacity: 0;
-            top: 50%;
-        }
-
-        @keyframes musicFloat {
-            0%, 100% {
-                opacity: 0;
-                transform: translateY(0);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-80px);
-            }
-        }
-
-        /* Hide scrollbar but keep functionality */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 107, 157, 0.5);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 107, 157, 0.8);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>She Blooms — Happy Women's Day</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,600&family=DM+Sans:wght@200;300;400&display=swap');
+
+  :root {
+    --rose: #e8607a;
+    --blush: #f2a7b8;
+    --gold: #d4a853;
+    --cream: #fdf6ee;
+    --deep: #1a0a14;
+    --plum: #6b2d4e;
+    --sage: #7a9e7e;
+    --lavender: #c3a6d4;
+    --coral: #f07060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f2a7b8, #e8607a);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s, height 0.2s;
+    box-shadow: 0 0 20px #e8607a88;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid #f2a7b866;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+
+  /* STARFIELD */
+  #starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* SCREENS */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ─── SCREEN 1: SEED ─── */
+  #screen-seed {
+    background: radial-gradient(ellipse at 50% 60%, #2d0d22 0%, #0f0510 70%);
+  }
+
+  .seed-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    color: #c3a6d488;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1.5s ease forwards;
+  }
+
+  .seed-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--cream);
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 3.5rem;
+    animation: fadeUp 1.5s 0.3s ease both;
+  }
+  .seed-subtitle span { color: var(--rose); }
+
+  .seed-prompt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: #f2a7b866;
+    text-transform: uppercase;
+    margin-top: 3rem;
+    animation: pulse-text 2s ease-in-out infinite, fadeUp 1.5s 0.8s ease both;
+  }
+
+  /* SEED ORBS */
+  .seed-stage {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    animation: fadeUp 1.5s 0.5s ease both;
+  }
+
+  .seed-glow {
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #e8607a22 0%, transparent 70%);
+    animation: breathe 3s ease-in-out infinite;
+  }
+
+  .seed-shell {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(145deg at 35% 30%, #3d1a2e, #1a0a14 60%, #0a0308);
+    border: 2px solid #6b2d4e55;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow:
+      0 0 40px #e8607a22,
+      inset 0 1px 0 #ffffff11,
+      inset 0 -1px 0 #00000055;
+  }
+  .seed-shell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 80px #e8607a55, inset 0 1px 0 #ffffff22;
+  }
+  .seed-shell:active { transform: scale(0.97); }
+
+  .seed-inner {
+    width: 60px;
+    height: 80px;
+    background: radial-gradient(ellipse at 40% 30%, #d4a85388, #6b2d4e44 60%, transparent);
+    border-radius: 50% 50% 45% 45%;
+    border: 1px solid #d4a85344;
+    position: relative;
+    animation: seed-float 4s ease-in-out infinite;
+  }
+  .seed-inner::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 30%;
+    height: 20%;
+    background: #ffffff22;
+    border-radius: 50%;
+    filter: blur(4px);
+  }
+
+  .crack {
+    position: absolute;
+    background: #d4a853;
+    opacity: 0;
+    transform-origin: center;
+  }
+
+  /* RIPPLE ON CLICK */
+  .ripple-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid #e8607a;
+    animation: ripple-expand 0.8s ease-out forwards;
+    pointer-events: none;
+  }
+  @keyframes ripple-expand {
+    from { width: 0; height: 0; opacity: 0.8; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    to { width: 300px; height: 300px; opacity: 0; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  }
+
+  /* CRACK COUNTER RING */
+  .crack-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: conic-gradient(var(--rose) 0%, var(--rose) var(--progress, 0%), #ffffff11 var(--progress, 0%)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: --progress 0.3s;
+  }
+
+  /* ─── SCREEN 2: BLOOM ─── */
+  #screen-bloom {
+    background: radial-gradient(ellipse at 50% 80%, #1a3020 0%, #0a1a10 50%, #050a08 100%);
+    overflow: hidden;
+  }
+
+  #bloom-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .bloom-content {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .bloom-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.6em;
+    color: #7a9e7e;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+
+  .bloom-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-style: italic;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+    margin: 0.5rem 0;
+    opacity: 0;
+    animation: bloom-text 1.2s 0.8s cubic-bezier(0.22,1,0.36,1) both;
+    text-shadow: 0 0 80px #7a9e7e44;
+  }
+
+  .bloom-title .women { color: var(--rose); display: block; }
+  .bloom-title .day { color: var(--gold); display: block; font-size: 0.6em; letter-spacing: 0.1em; }
+
+  .bloom-message {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    color: var(--blush);
+    max-width: 600px;
+    margin: 1.5rem auto;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 1s 1.5s ease both;
+  }
+
+  /* AFFIRMATION CARDS */
+  .affirmation-track {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem 3rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 100vw;
+    opacity: 0;
+    animation: fadeUp 1s 2s ease both;
+  }
+  .affirmation-track::-webkit-scrollbar { display: none; }
+
+  .aff-card {
+    flex-shrink: 0;
+    width: 180px;
+    padding: 1.5rem 1.2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: card-float var(--dur, 4s) var(--del, 0s) ease-in-out infinite alternate;
+  }
+  .aff-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .aff-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--card-bg);
+    opacity: 0.15;
+    border-radius: inherit;
+  }
+  .aff-card .card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .aff-card .card-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cream);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .aff-card .card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: rgba(253,246,238,0.6);
+    line-height: 1.4;
+  }
+
+  /* FINAL WISH */
+  .final-wish {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 2.5s ease both;
+  }
+  .final-wish p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: rgba(253,246,238,0.35);
+    text-transform: uppercase;
+  }
+
+  /* FLOATING PETALS */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 2;
+    animation: petal-fall var(--fall-dur) var(--fall-del) linear infinite;
+    opacity: 0;
+  }
+  @keyframes petal-fall {
+    0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(var(--drift)); opacity: 0; }
+  }
+
+  /* EXPLOSION PARTICLES */
+  .particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 20;
+    animation: particle-burst var(--p-dur) var(--p-del) ease-out forwards;
+  }
+  @keyframes particle-burst {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--px)), calc(-50% + var(--py))) scale(0); opacity: 0; }
+  }
+
+  /* KEYFRAMES */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-text {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+  @keyframes seed-float {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+  @keyframes bloom-text {
+    from { opacity: 0; transform: scale(0.8) translateY(30px); filter: blur(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+  }
+  @keyframes card-float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+  }
+  @keyframes shake {
+    0%,100% { transform: translate(0,0) rotate(0deg); }
+    20% { transform: translate(-4px, 2px) rotate(-1deg); }
+    40% { transform: translate(4px, -2px) rotate(1deg); }
+    60% { transform: translate(-3px, 3px) rotate(-0.5deg); }
+    80% { transform: translate(3px, -1px) rotate(0.5deg); }
+  }
+  @keyframes crack-appear {
+    to { opacity: 1; }
+  }
+
+  /* PROGRESS TEXT */
+  .click-count {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: #d4a85388;
+    white-space: nowrap;
+  }
+
+  /* GLOW PULSE on hover seed */
+  .seed-shell:hover .seed-inner { animation-play-state: paused; }
+
+  /* SCREEN TRANSITION */
+  .bloom-entry-overlay {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .bloom-entry-overlay.flash { animation: flash-in 0.5s ease forwards; }
+  @keyframes flash-in {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* SPARKLE TRAIL */
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9997;
+    border-radius: 50%;
+    animation: sparkle-fade 0.6s ease-out forwards;
+  }
+  @keyframes sparkle-fade {
+    from { transform: translate(-50%,-50%) scale(1); opacity: 0.8; }
+    to { transform: translate(-50%,-50%) scale(0); opacity: 0; }
+  }
+
+  /* RESPONSIVE */
+  @media(max-width: 600px) {
+    .affirmation-track { padding: 1rem 1.5rem; }
+    .aff-card { width: 160px; }
+  }
+</style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading">
-        <div class="loader-heart">❤️</div>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Flash overlay -->
+<div class="bloom-entry-overlay" id="flashOverlay"></div>
+
+<!-- Starfield -->
+<canvas id="starfield"></canvas>
+
+<!-- ═══ SCREEN 1: SEED ═══ -->
+<div class="screen active" id="screen-seed">
+  <p class="seed-title">March 8 · 2025</p>
+  <h1 class="seed-subtitle">Every woman<br>holds a <span>universe</span></h1>
+
+  <div class="seed-stage">
+    <div class="seed-glow"></div>
+    <div class="seed-shell" id="seedShell">
+      <div class="seed-inner" id="seedInner"></div>
+      <!-- crack lines injected by JS -->
     </div>
+    <div class="click-count" id="clickCount">tap to awaken</div>
+  </div>
 
-    <!-- Particle Canvas -->
-    <canvas id="particles"></canvas>
+  <p class="seed-prompt" id="seedPrompt">✦ click the seed ✦</p>
+</div>
 
-    <!-- Scene 1: The Beginning -->
-    <div id="scene1" class="scene active">
-        <div class="text-center z-10">
-            <!-- Stars falling animation -->
-            <div class="star-container mb-12">
-                <div class="falling-star" style="left: 20%; animation-delay: 0s;">⭐</div>
-                <div class="falling-star" style="left: 50%; animation-delay: 0.5s;">✨</div>
-                <div class="falling-star" style="left: 80%; animation-delay: 1s;">⭐</div>
-            </div>
-            <p id="line1" class="text-2xl md:text-4xl mb-8 fade-in-text" style="animation-delay: 1s;">Every story has a beginning...</p>
-            <p id="line2" class="text-3xl md:text-5xl font-bold fade-in-text" style="animation-delay: 3.5s;">Ours began in the 4th semester...</p>
-        </div>
-    </div>
+<!-- ═══ SCREEN 2: BLOOM ═══ -->
+<div class="screen" id="screen-bloom">
+  <canvas id="bloom-canvas"></canvas>
 
-    <!-- Scene 2: College Days -->
-    <div id="scene2" class="scene">
-        <div class="text-center z-10 max-w-4xl relative">
-            <!-- Animated Characters -->
-            <div class="characters-container mb-12">
-                <!-- Lost boy character -->
-                <div class="character boy-lost">
-                    <div class="char-body">
-                        <div class="char-head">😔</div>
-                        <div class="char-torso"></div>
-                    </div>
-                    <div class="thought-bubble">?</div>
-                </div>
-                
-                <!-- Toxic friends (shadows) -->
-                <div class="toxic-shadows">
-                    <div class="shadow-person" style="left: -60px;">👤</div>
-                    <div class="shadow-person" style="left: -80px;">👤</div>
-                </div>
-                
-                <!-- Girl character (Diksha) entering with light -->
-                <div class="character girl-hero">
-                    <div class="char-glow"></div>
-                    <div class="char-body">
-                        <div class="char-head">😊</div>
-                        <div class="char-torso girl"></div>
-                    </div>
-                    <div class="book-icon">📚</div>
-                </div>
-            </div>
+  <p class="bloom-eyebrow">Happy International Women's Day</p>
+  <div class="bloom-title bloom-content">
+    <span class="women">She Blooms.</span>
+    <span class="day">She Rises. She Shines.</span>
+  </div>
 
-            <div class="glass-card">
-                <p class="line text-2xl md:text-3xl mb-6" data-delay="0">I was lost...</p>
-                <p class="line text-2xl md:text-3xl mb-6" data-delay="1500">Confused...</p>
-                <p class="line text-2xl md:text-3xl mb-6 glitch" data-delay="3000">Surrounded by the wrong people...</p>
-                <div class="mt-12">
-                    <p class="line text-3xl md:text-4xl font-bold glow-text" data-delay="5000">And then... you came into my life.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+  <p class="bloom-message">
+    You are not just one woman — you are every woman who dared,<br>
+    every girl who dreamed, every force that refused to be dimmed.
+  </p>
 
-    <!-- Scene 3: She Changed Everything -->
-    <div id="scene3" class="scene">
-        <div class="text-center z-10 max-w-4xl relative">
-            <!-- Animated couple growing together -->
-            <div class="couple-animation mb-12">
-                <div class="couple-growing">
-                    <div class="person-left happy">
-                        <div class="person-head">😊</div>
-                        <div class="person-body"></div>
-                    </div>
-                    <div class="connecting-hearts">
-                        <span class="heart-pulse">💕</span>
-                        <span class="heart-pulse" style="animation-delay: 0.3s;">💕</span>
-                        <span class="heart-pulse" style="animation-delay: 0.6s;">💕</span>
-                    </div>
-                    <div class="person-right happy">
-                        <div class="person-head">😊</div>
-                        <div class="person-body girl"></div>
-                    </div>
-                </div>
-                <!-- Transformation icons floating around -->
-                <div class="transformation-icons">
-                    <div class="transform-icon" style="left: 10%; top: 20%;">📚</div>
-                    <div class="transform-icon" style="left: 85%; top: 30%;">✨</div>
-                    <div class="transform-icon" style="left: 15%; top: 70%;">🛡️</div>
-                    <div class="transform-icon" style="left: 80%; top: 65%;">🕊️</div>
-                </div>
-            </div>
+  <div class="affirmation-track" id="affirmationTrack"></div>
 
-            <div class="glass-card">
-                <h2 class="line text-4xl md:text-5xl font-bold mb-12" data-delay="0">You changed everything...</h2>
-                <div class="space-y-8">
-                    <p class="line text-xl md:text-2xl glow-text" data-delay="1500">📚 You helped me in my studies</p>
-                    <p class="line text-xl md:text-2xl glow-text" data-delay="3000">✨ You believed in me when I doubted myself</p>
-                    <p class="line text-xl md:text-2xl glow-text" data-delay="4500">🛡️ You saved me from toxic friendships</p>
-                    <p class="line text-xl md:text-2xl glow-text" data-delay="6000">🕊️ You became my peace</p>
-                    <p class="line text-xl md:text-2xl glow-text" data-delay="7500">💪 You became my strength</p>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="final-wish">
+    <p>With love, light & limitless power ✦ 8 March</p>
+  </div>
+</div>
 
-    <!-- Scene 4: Interactive Moment -->
-    <div id="scene4" class="scene">
-        <div class="text-center z-10 relative">
-            <!-- Animated couple holding hands -->
-            <div class="couple-holding-hands mb-12">
-                <div class="holding-person left">
-                    <div class="holding-head">😊</div>
-                    <div class="holding-body"></div>
-                    <div class="holding-arm"></div>
-                </div>
-                <div class="holding-heart">❤️</div>
-                <div class="holding-person right">
-                    <div class="holding-head">😊</div>
-                    <div class="holding-body girl"></div>
-                    <div class="holding-arm"></div>
-                </div>
-            </div>
-            
-            <!-- Floating roses -->
-            <div class="roses-floating">
-                <div class="rose" style="left: 15%; animation-delay: 0s;">🌹</div>
-                <div class="rose" style="left: 30%; animation-delay: 0.5s;">🌹</div>
-                <div class="rose" style="left: 70%; animation-delay: 1s;">🌹</div>
-                <div class="rose" style="left: 85%; animation-delay: 1.5s;">🌹</div>
-            </div>
+<script>
+// ══════════════════════════════════════════════
+// CURSOR
+// ══════════════════════════════════════════════
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mx = -100, my = -100;
 
-            <h2 class="text-4xl md:text-6xl font-bold mb-12 zoom-in">You mean the world to me</h2>
-            <button id="revealBtn" class="romantic-btn floating">
-                See What You Mean To Me ❤️
-            </button>
-        </div>
-    </div>
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  cursorRing.style.left = mx + 'px';
+  cursorRing.style.top = my + 'px';
+  spawnSparkle(mx, my);
+});
 
-    <!-- Scene 5: Final Confession -->
-    <div id="scene5" class="scene" style="display: none;">
-        <div class="text-center z-10 max-w-5xl relative">
-            <!-- Forever couple animation with infinity symbol -->
-            <div class="forever-couple mb-12">
-                <div class="infinity-path">
-                    <div class="infinity-symbol">∞</div>
-                    <div class="couple-on-infinity">
-                        <div class="mini-person">😊</div>
-                        <div class="mini-person" style="margin-left: 20px;">😊</div>
-                    </div>
-                </div>
-            </div>
+let sparkleThrottle = 0;
+function spawnSparkle(x, y) {
+  const now = Date.now();
+  if (now - sparkleThrottle < 60) return;
+  sparkleThrottle = now;
+  const s = document.createElement('div');
+  s.classList.add('sparkle');
+  const size = Math.random() * 6 + 3;
+  const colors = ['#e8607a','#f2a7b8','#d4a853','#c3a6d4','#7a9e7e'];
+  s.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;background:${colors[Math.floor(Math.random()*colors.length)]};`;
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 600);
+}
 
-            <div class="glass-card">
-                <h1 id="final1" class="line text-5xl md:text-7xl font-bold mb-8 heartbeat glow-text" data-delay="0">Happy Valentine's Day Diksha ❤️</h1>
-                <div class="space-y-6 mt-12">
-                    <p id="final2" class="line text-3xl md:text-4xl" data-delay="2000">I am sorry.</p>
-                    <p id="final3" class="line text-2xl md:text-3xl" data-delay="3500">For every mistake...</p>
-                    <p id="final4" class="line text-3xl md:text-4xl" data-delay="5000">Please forgive me.</p>
-                    <p id="final5" class="line text-4xl md:text-5xl font-bold glow-text heartbeat" data-delay="6500">You are my forever.</p>
-                </div>
-                <button id="foreverBtn" class="romantic-btn mt-12" style="opacity: 0; animation: fadeInUp 1s ease forwards; animation-delay: 8s;">
-                    Forever Yours ❤️
-                </button>
-            </div>
-        </div>
-    </div>
+// ══════════════════════════════════════════════
+// STARFIELD
+// ══════════════════════════════════════════════
+const sf = document.getElementById('starfield');
+const sfc = sf.getContext('2d');
+sf.width = innerWidth; sf.height = innerHeight;
+window.addEventListener('resize', () => { sf.width = innerWidth; sf.height = innerHeight; });
 
-    <!-- Final Message -->
-    <div id="finalMessage" class="scene" style="display: none;">
-        <div class="text-center z-10 relative">
-            <!-- Dancing couple -->
-            <div class="dancing-couple mb-12">
-                <div class="dancer left-dancer">
-                    <div class="dancer-head">😊</div>
-                    <div class="dancer-body"></div>
-                </div>
-                <div class="dancer right-dancer">
-                    <div class="dancer-head">😊</div>
-                    <div class="dancer-body girl"></div>
-                </div>
-                <div class="music-notes">
-                    <span style="left: 20%; animation-delay: 0s;">🎵</span>
-                    <span style="left: 50%; animation-delay: 0.5s;">🎶</span>
-                    <span style="left: 80%; animation-delay: 1s;">🎵</span>
-                </div>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-bold glow-text zoom-in">Thank you for choosing me.</h1>
-        </div>
-    </div>
+const stars = Array.from({length: 220}, () => ({
+  x: Math.random() * innerWidth,
+  y: Math.random() * innerHeight,
+  r: Math.random() * 1.5 + 0.3,
+  speed: Math.random() * 0.3 + 0.05,
+  twinkle: Math.random() * Math.PI * 2
+}));
 
-    <script>
-        // Particle System
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+function drawStars(t) {
+  sfc.clearRect(0, 0, sf.width, sf.height);
+  stars.forEach(s => {
+    s.twinkle += 0.02;
+    const alpha = 0.3 + Math.sin(s.twinkle) * 0.4;
+    sfc.beginPath();
+    sfc.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    sfc.fillStyle = `rgba(253,246,238,${alpha})`;
+    sfc.fill();
+    s.y += s.speed;
+    if (s.y > sf.height) { s.y = 0; s.x = Math.random() * sf.width; }
+  });
+  requestAnimationFrame(drawStars);
+}
+requestAnimationFrame(drawStars);
 
-        const particles = [];
-        const particleCount = 100;
+// ══════════════════════════════════════════════
+// SEED CRACK MECHANIC
+// ══════════════════════════════════════════════
+const seedShell = document.getElementById('seedShell');
+const clickCount = document.getElementById('clickCount');
+const MAX_CLICKS = 7;
+let clicks = 0;
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.5 + 0.2;
-            }
+const CRACK_LINES = [
+  {w:2,h:35, top:'18%', left:'48%', rot: 15},
+  {w:2,h:28, top:'30%', left:'55%', rot: -20},
+  {w:2,h:42, top:'25%', left:'38%', rot: 35},
+  {w:2,h:22, top:'50%', left:'60%', rot: -10},
+  {w:2,h:30, top:'45%', left:'30%', rot: 25},
+  {w:2,h:20, top:'60%', left:'50%', rot: -30},
+  {w:2,h:38, top:'35%', left:'45%', rot: 50},
+];
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+const CLICK_TEXTS = [
+  'tap to awaken', 'she stirs…', 'she feels it…', 'she is rising…', 'almost there…', 'she is ready…', 'she blooms! ✦'
+];
 
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
+seedShell.addEventListener('click', e => {
+  if (clicks >= MAX_CLICKS) return;
+  clicks++;
 
-            draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+  // Ripple
+  const ripple = document.createElement('div');
+  ripple.classList.add('ripple-ring');
+  seedShell.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 900);
 
-        function initParticles() {
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
+  // Crack
+  if (clicks <= CRACK_LINES.length) {
+    const c = CRACK_LINES[clicks - 1];
+    const line = document.createElement('div');
+    line.classList.add('crack');
+    line.style.cssText = `width:${c.w}px;height:${c.h}px;top:${c.top};left:${c.left};transform:rotate(${c.rot}deg);background:linear-gradient(to bottom, #d4a853, #e8607a);border-radius:2px;animation:crack-appear 0.3s ease forwards;`;
+    seedShell.appendChild(line);
+  }
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
+  // Shake
+  seedShell.style.animation = 'shake 0.4s ease';
+  setTimeout(() => seedShell.style.animation = '', 400);
 
-        initParticles();
-        animateParticles();
+  // Progress
+  const prog = (clicks / MAX_CLICKS) * 100;
+  seedShell.style.boxShadow = `0 0 ${40 + clicks * 12}px #e8607a${Math.floor(clicks * 36).toString(16).padStart(2,'0')}, inset 0 1px 0 #ffffff11`;
+  clickCount.textContent = CLICK_TEXTS[clicks - 1];
 
-        // Resize canvas on window resize
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+  // Particles
+  for (let i = 0; i < 8; i++) spawnParticle(e.clientX, e.clientY);
 
-        // Loading Screen
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loading').classList.add('hide');
-            }, 2000);
-        });
+  // Bloom!
+  if (clicks === MAX_CLICKS) {
+    setTimeout(triggerBloom, 600);
+  }
+});
 
-        // Scroll Animation Observer
-        const observerOptions = {
-            threshold: 0.3,
-            rootMargin: '0px'
-        };
+function spawnParticle(x, y) {
+  const p = document.createElement('div');
+  p.classList.add('particle');
+  const size = Math.random() * 10 + 4;
+  const angle = Math.random() * Math.PI * 2;
+  const dist = Math.random() * 120 + 40;
+  const colors = ['#e8607a','#f2a7b8','#d4a853','#c3a6d4','#fdf6ee','#7a9e7e'];
+  const dur = Math.random() * 0.6 + 0.4;
+  p.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${x}px;top:${y}px;
+    background:${colors[Math.floor(Math.random()*colors.length)]};
+    --px:${Math.cos(angle)*dist}px;
+    --py:${Math.sin(angle)*dist}px;
+    --p-dur:${dur}s;
+    --p-del:0s;
+  `;
+  document.body.appendChild(p);
+  setTimeout(() => p.remove(), (dur + 0.1) * 1000);
+}
 
-        const sceneObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    
-                    // Animate lines within the scene
-                    const lines = entry.target.querySelectorAll('.line');
-                    lines.forEach((line, index) => {
-                        const delay = line.dataset.delay || index * 1000;
-                        setTimeout(() => {
-                            line.classList.add('show');
-                        }, delay);
-                    });
+// ══════════════════════════════════════════════
+// BLOOM TRANSITION
+// ══════════════════════════════════════════════
+function triggerBloom() {
+  // Big particle explosion
+  const cx = innerWidth / 2, cy = innerHeight / 2;
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => spawnParticle(cx, cy), Math.random() * 400);
+  }
 
-                    // Create floating hearts for scene 3
-                    if (entry.target.id === 'scene3') {
-                        createFloatingHearts(entry.target);
-                    }
+  // Flash
+  const flash = document.getElementById('flashOverlay');
+  flash.classList.add('flash');
 
-                    // Add sparkles for scene 5
-                    if (entry.target.id === 'scene5') {
-                        createSparkles(entry.target);
-                    }
-                }
-            });
-        }, observerOptions);
+  setTimeout(() => {
+    document.getElementById('screen-seed').classList.remove('active');
+    document.getElementById('screen-bloom').classList.add('active');
+    spawnPetals();
+    initBloomCanvas();
+  }, 500);
+}
 
-        // Observe all scenes
-        document.querySelectorAll('.scene').forEach(scene => {
-            sceneObserver.observe(scene);
-        });
+// ══════════════════════════════════════════════
+// PETALS
+// ══════════════════════════════════════════════
+const PETAL_SHAPES = ['🌸','🌺','🌹','🌷','✿','❀','🍀','✦','⭐','💫'];
 
-        // Heart Trail on Mouse Move
-        let heartTrailEnabled = false;
+function spawnPetals() {
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.classList.add('petal');
+    p.textContent = PETAL_SHAPES[Math.floor(Math.random() * PETAL_SHAPES.length)];
+    const dur = Math.random() * 8 + 6;
+    const del = Math.random() * 10;
+    const drift = (Math.random() - 0.5) * 200;
+    p.style.cssText = `
+      left: ${Math.random() * 110 - 5}%;
+      top: -30px;
+      font-size: ${Math.random() * 16 + 12}px;
+      --fall-dur: ${dur}s;
+      --fall-del: ${del}s;
+      --drift: ${drift}px;
+      filter: hue-rotate(${Math.random()*60-30}deg);
+    `;
+    document.body.appendChild(p);
+  }
+}
 
-        document.addEventListener('mousemove', (e) => {
-            if (heartTrailEnabled) {
-                createHeartTrail(e.clientX, e.clientY);
-            }
-        });
+// ══════════════════════════════════════════════
+// BLOOM CANVAS — Generative flower
+// ══════════════════════════════════════════════
+function initBloomCanvas() {
+  const canvas = document.getElementById('bloom-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
 
-        function createHeartTrail(x, y) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-trail';
-            heart.textContent = '❤️';
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            document.body.appendChild(heart);
+  const flowers = [];
+  const FLOWER_COLORS = [
+    ['#e8607a','#f2a7b8','#1a0a14'],
+    ['#d4a853','#f5d07a','#1a1200'],
+    ['#c3a6d4','#e0c8f0','#0f0a14'],
+    ['#7a9e7e','#b2d4b4','#0a1a10'],
+    ['#f07060','#f8b0a0','#180a0a'],
+  ];
 
-            setTimeout(() => {
-                heart.remove();
-            }, 2000);
-        }
+  class Flower {
+    constructor(x, y, delay) {
+      this.x = x; this.y = y;
+      this.delay = delay;
+      this.progress = 0;
+      this.petals = Math.floor(Math.random() * 3) + 5;
+      this.maxR = Math.random() * 60 + 30;
+      this.colors = FLOWER_COLORS[Math.floor(Math.random() * FLOWER_COLORS.length)];
+      this.rotation = Math.random() * Math.PI * 2;
+      this.speed = Math.random() * 0.008 + 0.005;
+      this.started = false;
+    }
+    draw(t) {
+      if (t < this.delay) return;
+      if (!this.started) this.started = true;
+      if (this.progress < 1) this.progress = Math.min(1, this.progress + this.speed);
 
-        // Floating Hearts
-        function createFloatingHearts(container) {
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'floating-heart';
-                    heart.textContent = '❤️';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDelay = Math.random() * 2 + 's';
-                    container.appendChild(heart);
+      const p = easeOut(this.progress);
+      const r = this.maxR * p;
+      const cx = this.x, cy = this.y;
 
-                    setTimeout(() => {
-                        heart.remove();
-                    }, 8000);
-                }, i * 500);
-            }
-        }
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(this.rotation + t * 0.0002);
 
-        // Sparkles
-        function createSparkles(container) {
-            for (let i = 0; i < 30; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 2 + 's';
-                container.appendChild(sparkle);
-            }
-        }
+      // Petals
+      for (let i = 0; i < this.petals; i++) {
+        const angle = (i / this.petals) * Math.PI * 2;
+        ctx.save();
+        ctx.rotate(angle);
+        const grad = ctx.createRadialGradient(0, -r * 0.5, 0, 0, -r * 0.5, r * 0.9);
+        grad.addColorStop(0, this.colors[0] + 'dd');
+        grad.addColorStop(0.6, this.colors[1] + '99');
+        grad.addColorStop(1, this.colors[0] + '00');
+        ctx.beginPath();
+        ctx.ellipse(0, -r * 0.55, r * 0.22, r * 0.45, 0, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.restore();
+      }
 
-        // Confetti
-        function createConfetti() {
-            const colors = ['#ff6b9d', '#ffa5c5', '#d4497c', '#fff', '#ffe5ec'];
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.top = '-10px';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                    document.body.appendChild(confetti);
+      // Center
+      const cGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 0.22);
+      cGrad.addColorStop(0, '#fdf6ee');
+      cGrad.addColorStop(0.5, this.colors[0]);
+      cGrad.addColorStop(1, this.colors[2]);
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.22, 0, Math.PI * 2);
+      ctx.fillStyle = cGrad;
+      ctx.fill();
 
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 3000);
-                }, i * 30);
-            }
-        }
+      ctx.restore();
+    }
+  }
 
-        // Reveal Button - Scene 4 to Scene 5
-        document.getElementById('revealBtn').addEventListener('click', function() {
-            heartTrailEnabled = true;
-            
-            // Smooth transition
-            const scene4 = document.getElementById('scene4');
-            const scene5 = document.getElementById('scene5');
-            
-            scene4.style.transition = 'opacity 1s ease';
-            scene4.style.opacity = '0';
-            
-            setTimeout(() => {
-                scene4.style.display = 'none';
-                scene5.style.display = 'flex';
-                scene5.classList.add('active');
-                
-                // Trigger confetti
-                createConfetti();
-                
-                // Animate final scene lines
-                const finalLines = scene5.querySelectorAll('.line');
-                finalLines.forEach((line, index) => {
-                    const delay = line.dataset.delay || index * 1500;
-                    setTimeout(() => {
-                        line.classList.add('show');
-                    }, delay);
-                });
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
-                // Scroll to scene 5
-                scene5.scrollIntoView({ behavior: 'smooth' });
-            }, 1000);
-        });
+  // Spawn flowers at key positions
+  const positions = [
+    [0.15, 0.8], [0.85, 0.75], [0.08, 0.3], [0.92, 0.25],
+    [0.3, 0.9], [0.7, 0.85], [0.5, 0.95],
+    [0.02, 0.6], [0.98, 0.55], [0.25, 0.15], [0.75, 0.1]
+  ];
+  positions.forEach((pos, i) => {
+    flowers.push(new Flower(pos[0] * innerWidth, pos[1] * innerHeight, i * 0.5));
+  });
 
-        // Forever Button - Final Explosion
-        document.getElementById('foreverBtn').addEventListener('click', function() {
-            createConfetti();
-            createConfetti(); // Double confetti!
-            
-            const scene5 = document.getElementById('scene5');
-            const finalMessage = document.getElementById('finalMessage');
-            
-            scene5.style.transition = 'opacity 1.5s ease';
-            scene5.style.opacity = '0';
-            
-            setTimeout(() => {
-                scene5.style.display = 'none';
-                finalMessage.style.display = 'flex';
-                finalMessage.classList.add('active');
-                finalMessage.scrollIntoView({ behavior: 'smooth' });
-                
-                // More hearts!
-                createFloatingHearts(finalMessage);
-            }, 1500);
-        });
+  let t = 0;
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    t += 1;
+    flowers.forEach(f => f.draw(t));
+    requestAnimationFrame(render);
+  }
+  render();
+}
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+// ══════════════════════════════════════════════
+// AFFIRMATION CARDS
+// ══════════════════════════════════════════════
+const AFFIRMATIONS = [
+  { icon: '🔥', word: 'Fierce', desc: 'Your fire cannot be put out', color: '#e8607a', bg: '#e8607a' },
+  { icon: '🌙', word: 'Wise', desc: 'Ancient knowing lives in you', color: '#c3a6d4', bg: '#c3a6d4' },
+  { icon: '🌿', word: 'Resilient', desc: 'You bend but never break', color: '#7a9e7e', bg: '#7a9e7e' },
+  { icon: '✨', word: 'Radiant', desc: 'Your light is unstoppable', color: '#d4a853', bg: '#d4a853' },
+  { icon: '💎', word: 'Rare', desc: 'There is nobody like you', color: '#6b9ed4', bg: '#6b9ed4' },
+  { icon: '🦋', word: 'Free', desc: 'You were born to soar', color: '#f07060', bg: '#f07060' },
+  { icon: '🌺', word: 'Blooming', desc: 'Always becoming more', color: '#f2a7b8', bg: '#f2a7b8' },
+  { icon: '⚡', word: 'Powerful', desc: 'Worlds change because of you', color: '#f5d07a', bg: '#f5d07a' },
+];
 
-        // Auto-scroll hint (optional - removes after first interaction)
-        let hasScrolled = false;
-        window.addEventListener('scroll', () => {
-            if (!hasScrolled) {
-                hasScrolled = true;
-            }
-        }, { once: true });
-    </script>
+const track = document.getElementById('affirmationTrack');
+AFFIRMATIONS.forEach((a, i) => {
+  const card = document.createElement('div');
+  card.classList.add('aff-card');
+  card.style.cssText = `
+    --card-bg: ${a.bg};
+    --dur: ${3.5 + i * 0.3}s;
+    --del: ${i * 0.2}s;
+    border-color: ${a.color}33;
+    box-shadow: 0 8px 40px ${a.color}22, inset 0 1px 0 ${a.color}22;
+  `;
+  card.innerHTML = `
+    <span class="card-icon">${a.icon}</span>
+    <span class="card-word" style="color:${a.color}">${a.word}</span>
+    <span class="card-desc">${a.desc}</span>
+  `;
+  card.addEventListener('click', () => {
+    for (let j = 0; j < 15; j++) spawnParticle(
+      card.getBoundingClientRect().left + card.offsetWidth / 2,
+      card.getBoundingClientRect().top + card.offsetHeight / 2
+    );
+  });
+  track.appendChild(card);
+});
+
+// Touch support for seed
+seedShell.addEventListener('touchstart', e => {
+  e.preventDefault();
+  seedShell.click();
+}, {passive: false});
+</script>
 </body>
 </html>
