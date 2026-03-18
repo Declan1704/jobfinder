@@ -3,847 +3,1086 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>She Blooms — Happy Women's Day</title>
+<title>Cricket IQ Test — Are You Even a Fan?</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,600&family=DM+Sans:wght@200;300;400&display=swap');
-
   :root {
-    --rose: #e8607a;
-    --blush: #f2a7b8;
-    --gold: #d4a853;
-    --cream: #fdf6ee;
-    --deep: #1a0a14;
-    --plum: #6b2d4e;
-    --sage: #7a9e7e;
-    --lavender: #c3a6d4;
-    --coral: #f07060;
+    --grass: #1a472a;
+    --pitch: #c8a96e;
+    --red: #c0392b;
+    --cream: #fef9ef;
+    --ink: #1a1a1a;
+    --accent: #f39c12;
+    --white: #ffffff;
+    --correct: #27ae60;
+    --wrong: #e74c3c;
+    --card-bg: #fffef8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--deep);
-    font-family: 'DM Sans', sans-serif;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    cursor: none;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    background: var(--grass);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
   }
 
-  /* CUSTOM CURSOR */
-  .cursor {
-    position: fixed;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #f2a7b8, #e8607a);
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease, width 0.2s, height 0.2s;
-    box-shadow: 0 0 20px #e8607a88;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1.5px solid #f2a7b866;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.15s ease;
-  }
-
-  /* STARFIELD */
-  #starfield {
+  /* Cricket pitch lines background */
+  body::before {
+    content: '';
     position: fixed;
     inset: 0;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.03) 60px,
+        rgba(255,255,255,0.03) 61px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.03) 60px,
+        rgba(255,255,255,0.03) 61px
+      );
+    pointer-events: none;
     z-index: 0;
   }
 
-  /* SCREENS */
-  .screen {
+  /* Floating cricket balls */
+  .floater {
     position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.8s ease;
-  }
-  .screen.active {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  /* ─── SCREEN 1: SEED ─── */
-  #screen-seed {
-    background: radial-gradient(ellipse at 50% 60%, #2d0d22 0%, #0f0510 70%);
-  }
-
-  .seed-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    font-weight: 300;
-    letter-spacing: 0.5em;
-    color: #c3a6d488;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 1.5s ease forwards;
-  }
-
-  .seed-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 700;
-    font-style: italic;
-    color: var(--cream);
-    text-align: center;
-    line-height: 1.1;
-    margin-bottom: 3.5rem;
-    animation: fadeUp 1.5s 0.3s ease both;
-  }
-  .seed-subtitle span { color: var(--rose); }
-
-  .seed-prompt {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    color: #f2a7b866;
-    text-transform: uppercase;
-    margin-top: 3rem;
-    animation: pulse-text 2s ease-in-out infinite, fadeUp 1.5s 0.8s ease both;
-  }
-
-  /* SEED ORBS */
-  .seed-stage {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    animation: fadeUp 1.5s 0.5s ease both;
-  }
-
-  .seed-glow {
-    position: absolute;
-    inset: -40px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #e8607a22 0%, transparent 70%);
-    animation: breathe 3s ease-in-out infinite;
-  }
-
-  .seed-shell {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: radial-gradient(145deg at 35% 30%, #3d1a2e, #1a0a14 60%, #0a0308);
-    border: 2px solid #6b2d4e55;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    box-shadow:
-      0 0 40px #e8607a22,
-      inset 0 1px 0 #ffffff11,
-      inset 0 -1px 0 #00000055;
-  }
-  .seed-shell:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 80px #e8607a55, inset 0 1px 0 #ffffff22;
-  }
-  .seed-shell:active { transform: scale(0.97); }
-
-  .seed-inner {
-    width: 60px;
-    height: 80px;
-    background: radial-gradient(ellipse at 40% 30%, #d4a85388, #6b2d4e44 60%, transparent);
-    border-radius: 50% 50% 45% 45%;
-    border: 1px solid #d4a85344;
-    position: relative;
-    animation: seed-float 4s ease-in-out infinite;
-  }
-  .seed-inner::after {
-    content: '';
-    position: absolute;
-    top: 15%;
-    left: 25%;
-    width: 30%;
-    height: 20%;
-    background: #ffffff22;
-    border-radius: 50%;
-    filter: blur(4px);
-  }
-
-  .crack {
-    position: absolute;
-    background: #d4a853;
-    opacity: 0;
-    transform-origin: center;
-  }
-
-  /* RIPPLE ON CLICK */
-  .ripple-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid #e8607a;
-    animation: ripple-expand 0.8s ease-out forwards;
-    pointer-events: none;
-  }
-  @keyframes ripple-expand {
-    from { width: 0; height: 0; opacity: 0.8; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-    to { width: 300px; height: 300px; opacity: 0; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-  }
-
-  /* CRACK COUNTER RING */
-  .crack-ring {
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    background: conic-gradient(var(--rose) 0%, var(--rose) var(--progress, 0%), #ffffff11 var(--progress, 0%)) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    transition: --progress 0.3s;
-  }
-
-  /* ─── SCREEN 2: BLOOM ─── */
-  #screen-bloom {
-    background: radial-gradient(ellipse at 50% 80%, #1a3020 0%, #0a1a10 50%, #050a08 100%);
-    overflow: hidden;
-  }
-
-  #bloom-canvas {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  .bloom-content {
-    position: relative;
-    z-index: 5;
-    text-align: center;
-    padding: 2rem;
-  }
-
-  .bloom-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.6em;
-    color: #7a9e7e;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 1s 0.5s ease both;
-  }
-
-  .bloom-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-style: italic;
-    font-weight: 700;
-    color: var(--cream);
-    line-height: 1;
-    margin: 0.5rem 0;
-    opacity: 0;
-    animation: bloom-text 1.2s 0.8s cubic-bezier(0.22,1,0.36,1) both;
-    text-shadow: 0 0 80px #7a9e7e44;
-  }
-
-  .bloom-title .women { color: var(--rose); display: block; }
-  .bloom-title .day { color: var(--gold); display: block; font-size: 0.6em; letter-spacing: 0.1em; }
-
-  .bloom-message {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    font-style: italic;
-    color: var(--blush);
-    max-width: 600px;
-    margin: 1.5rem auto;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fadeUp 1s 1.5s ease both;
-  }
-
-  /* AFFIRMATION CARDS */
-  .affirmation-track {
-    position: relative;
-    z-index: 5;
-    display: flex;
-    gap: 1rem;
-    padding: 1.5rem 3rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    max-width: 100vw;
-    opacity: 0;
-    animation: fadeUp 1s 2s ease both;
-  }
-  .affirmation-track::-webkit-scrollbar { display: none; }
-
-  .aff-card {
-    flex-shrink: 0;
-    width: 180px;
-    padding: 1.5rem 1.2rem;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: card-float var(--dur, 4s) var(--del, 0s) ease-in-out infinite alternate;
-  }
-  .aff-card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  }
-  .aff-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--card-bg);
-    opacity: 0.15;
-    border-radius: inherit;
-  }
-  .aff-card .card-icon {
     font-size: 2rem;
-    margin-bottom: 0.8rem;
-    display: block;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+    animation: drift linear infinite;
   }
-  .aff-card .card-word {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cream);
-    display: block;
-    margin-bottom: 0.4rem;
-  }
-  .aff-card .card-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.9rem;
-    font-style: italic;
-    color: rgba(253,246,238,0.6);
-    line-height: 1.4;
+  @keyframes drift {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-120px) rotate(720deg); }
   }
 
-  /* FINAL WISH */
-  .final-wish {
+  .container {
     position: relative;
-    z-index: 5;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
     text-align: center;
-    padding-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 1s 2.5s ease both;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 0.8s ease both;
   }
-  .final-wish p {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.3em;
-    color: rgba(253,246,238,0.35);
-    text-transform: uppercase;
-  }
-
-  /* FLOATING PETALS */
-  .petal {
-    position: fixed;
-    pointer-events: none;
-    z-index: 2;
-    animation: petal-fall var(--fall-dur) var(--fall-del) linear infinite;
-    opacity: 0;
-  }
-  @keyframes petal-fall {
-    0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
-    10% { opacity: 0.7; }
-    90% { opacity: 0.5; }
-    100% { transform: translateY(110vh) rotate(720deg) translateX(var(--drift)); opacity: 0; }
-  }
-
-  /* EXPLOSION PARTICLES */
-  .particle {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 20;
-    animation: particle-burst var(--p-dur) var(--p-del) ease-out forwards;
-  }
-  @keyframes particle-burst {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    100% { transform: translate(calc(-50% + var(--px)), calc(-50% + var(--py))) scale(0); opacity: 0; }
-  }
-
-  /* KEYFRAMES */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes pulse-text {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
+
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--ink);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
   }
-  @keyframes breathe {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.15); opacity: 1; }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 9vw, 6rem);
+    line-height: 0.9;
+    color: var(--cream);
+    text-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    letter-spacing: 2px;
   }
-  @keyframes seed-float {
-    0%, 100% { transform: translateY(0) rotate(-3deg); }
-    50% { transform: translateY(-12px) rotate(3deg); }
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    margin-top: 0.8rem;
+    font-weight: 300;
   }
-  @keyframes bloom-text {
-    from { opacity: 0; transform: scale(0.8) translateY(30px); filter: blur(10px); }
-    to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+
+  /* Scoreboard strip */
+  .scoreboard {
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border: 2px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    animation: fadeDown 0.8s 0.2s ease both;
   }
-  @keyframes card-float {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
+
+  .score-item { text-align: center; }
+  .score-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .score-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .score-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    margin-bottom: 2rem;
+    animation: fadeDown 0.8s 0.3s ease both;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #e67e22);
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+  }
+  .progress-fill::after {
+    content: '🏏';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    filter: drop-shadow(0 0 6px var(--accent));
+  }
+
+  /* ===== QUESTION CARD ===== */
+  .question-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 2px rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+    animation: cardSlide 0.4s cubic-bezier(0.4,0,0.2,1) both;
+  }
+  @keyframes cardSlide {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Corner decoration */
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle at top right, rgba(243,156,18,0.12), transparent 70%);
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.2rem;
+  }
+  .q-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+    opacity: 0.25;
+  }
+  .q-tag {
+    background: var(--grass);
+    color: var(--cream);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 99px;
+  }
+
+  .question-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Options */
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .option-btn {
+    background: white;
+    border: 2.5px solid #e8e2d4;
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--grass);
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--grass);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,71,42,0.2);
+  }
+  .option-btn:hover:not(:disabled)::before { opacity: 0.06; }
+  .option-btn:active:not(:disabled) { transform: scale(0.97); }
+
+  .option-btn.correct {
+    background: var(--correct);
+    border-color: var(--correct);
+    color: white;
+    animation: celebrate 0.4s ease;
+  }
+  .option-btn.wrong {
+    background: var(--wrong);
+    border-color: var(--wrong);
+    color: white;
+    animation: shake 0.4s ease;
+  }
+  .option-btn.reveal-correct {
+    background: rgba(39,174,96,0.12);
+    border-color: var(--correct);
+    color: var(--correct);
+  }
+
+  @keyframes celebrate {
+    0%,100% { transform: scale(1); }
+    40% { transform: scale(1.04); }
   }
   @keyframes shake {
-    0%,100% { transform: translate(0,0) rotate(0deg); }
-    20% { transform: translate(-4px, 2px) rotate(-1deg); }
-    40% { transform: translate(4px, -2px) rotate(1deg); }
-    60% { transform: translate(-3px, 3px) rotate(-0.5deg); }
-    80% { transform: translate(3px, -1px) rotate(0.5deg); }
-  }
-  @keyframes crack-appear {
-    to { opacity: 1; }
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
   }
 
-  /* PROGRESS TEXT */
-  .click-count {
-    position: absolute;
-    bottom: -50px;
+  /* Feedback toast */
+  .feedback {
+    position: fixed;
+    top: 20px;
     left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    color: #d4a85388;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--ink);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    z-index: 999;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    text-align: center;
+    max-width: 320px;
+    pointer-events: none;
     white-space: nowrap;
   }
+  .feedback.show { transform: translateX(-50%) translateY(0); }
+  .feedback.correct-fb { border-left: 4px solid var(--correct); }
+  .feedback.wrong-fb { border-left: 4px solid var(--wrong); }
+  .feedback.taunt-fb { border-left: 4px solid var(--accent); }
 
-  /* GLOW PULSE on hover seed */
-  .seed-shell:hover .seed-inner { animation-play-state: paused; }
-
-  /* SCREEN TRANSITION */
-  .bloom-entry-overlay {
-    position: fixed;
+  /* Next button */
+  .next-btn {
+    display: none;
+    margin-top: 1.2rem;
+    width: 100%;
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 14px;
+    padding: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-btn::after {
+    content: '';
+    position: absolute;
     inset: 0;
-    background: #fff;
-    z-index: 100;
-    pointer-events: none;
-    opacity: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.06));
   }
-  .bloom-entry-overlay.flash { animation: flash-in 0.5s ease forwards; }
-  @keyframes flash-in {
-    0% { opacity: 0; }
-    30% { opacity: 1; }
-    100% { opacity: 0; }
+  .next-btn:hover { background: #2d2d2d; transform: translateY(-1px); }
+  .next-btn:active { transform: scale(0.98); }
+  .next-btn.visible { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ===== RESULT SCREEN ===== */
+  #result-screen {
+    display: none;
+    text-align: center;
+    animation: fadeDown 0.8s ease;
   }
 
-  /* SPARKLE TRAIL */
-  .sparkle {
+  .result-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-emoji {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: bounce 1s ease infinite alternate;
+  }
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-12px); }
+  }
+
+  .result-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .result-subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  .result-score-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .result-score-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 2rem;
+  }
+
+  .result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-box {
+    background: #f5f0e8;
+    border-radius: 14px;
+    padding: 1rem 0.5rem;
+  }
+  .stat-box .val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--ink);
+  }
+  .stat-box .lbl {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999;
+  }
+
+  .verdict-strip {
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+  .verdict-pass { background: rgba(39,174,96,0.12); color: var(--correct); border: 2px solid var(--correct); }
+  .verdict-fail { background: rgba(231,76,60,0.12); color: var(--wrong); border: 2px solid var(--wrong); }
+
+  .retry-btn {
+    width: 100%;
+    background: var(--grass);
+    color: var(--cream);
+    border: none;
+    border-radius: 14px;
+    padding: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 1rem;
+  }
+  .retry-btn:hover { background: #1e5233; transform: translateY(-2px); }
+
+  /* Confetti */
+  .confetti-piece {
     position: fixed;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
     pointer-events: none;
-    z-index: 9997;
-    border-radius: 50%;
-    animation: sparkle-fade 0.6s ease-out forwards;
+    z-index: 9999;
   }
-  @keyframes sparkle-fade {
-    from { transform: translate(-50%,-50%) scale(1); opacity: 0.8; }
-    to { transform: translate(-50%,-50%) scale(0); opacity: 0; }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
   }
 
-  /* RESPONSIVE */
-  @media(max-width: 600px) {
-    .affirmation-track { padding: 1rem 1.5rem; }
-    .aff-card { width: 160px; }
+  /* ===== INTRO SCREEN ===== */
+  #intro-screen {
+    text-align: center;
+  }
+  .intro-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+  .intro-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .rules {
+    text-align: left;
+    background: #f5f0e8;
+    border-radius: 14px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .rules li {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    list-style: none;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .start-btn {
+    width: 100%;
+    background: var(--grass);
+    color: var(--cream);
+    border: none;
+    border-radius: 14px;
+    padding: 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 6px 20px rgba(26,71,42,0.4);
+  }
+  .start-btn:hover { background: #1e5233; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(26,71,42,0.4); }
+
+  /* Funny umpire mascot */
+  .umpire {
+    font-size: 4rem;
+    animation: wobble 2s ease-in-out infinite;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  @keyframes wobble {
+    0%,100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  /* Funny commentary box */
+  .commentary {
+    background: var(--ink);
+    color: rgba(255,255,255,0.7);
+    border-radius: 14px;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 1rem;
+    border-left: 3px solid var(--accent);
+    text-align: left;
+    min-height: 54px;
+    transition: opacity 0.3s;
+  }
+  .commentary strong { color: var(--accent); font-style: normal; }
+
+  @media (max-width: 500px) {
+    .options { grid-template-columns: 1fr; }
+    .result-stats { grid-template-columns: repeat(3,1fr); }
+    h1 { font-size: 3rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- Cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<!-- Floating cricket balls -->
+<div class="floater" style="left:5%;animation-duration:14s;animation-delay:0s;font-size:1.5rem">🏏</div>
+<div class="floater" style="left:20%;animation-duration:18s;animation-delay:3s;font-size:2.5rem">🏏</div>
+<div class="floater" style="left:45%;animation-duration:12s;animation-delay:7s;font-size:1.2rem">🏏</div>
+<div class="floater" style="left:70%;animation-duration:20s;animation-delay:1s;font-size:2rem">🏏</div>
+<div class="floater" style="left:88%;animation-duration:16s;animation-delay:5s;font-size:1.8rem">🏏</div>
 
-<!-- Flash overlay -->
-<div class="bloom-entry-overlay" id="flashOverlay"></div>
+<!-- Feedback toast -->
+<div class="feedback" id="feedback"></div>
 
-<!-- Starfield -->
-<canvas id="starfield"></canvas>
+<div class="container">
 
-<!-- ═══ SCREEN 1: SEED ═══ -->
-<div class="screen active" id="screen-seed">
-  <p class="seed-title">March 8 · 2025</p>
-  <h1 class="seed-subtitle">Every woman<br>holds a <span>universe</span></h1>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">🏟️ The Official (Unofficial) Cricket Exam</div>
+    <h1>CRICKET<br><span>IQ TEST</span></h1>
+    <p class="subtitle">Powered by your friend who definitely knows cricket now 🧐</p>
+  </div>
 
-  <div class="seed-stage">
-    <div class="seed-glow"></div>
-    <div class="seed-shell" id="seedShell">
-      <div class="seed-inner" id="seedInner"></div>
-      <!-- crack lines injected by JS -->
+  <!-- INTRO SCREEN -->
+  <div id="intro-screen">
+    <div class="intro-card">
+      <div class="umpire">🧑‍⚖️</div>
+      <h2>WELCOME, FELLOW CRICKETER</h2>
+      <p style="color:#666;font-size:0.95rem;margin-top:0.5rem">Your friend just gave you a cricket tutorial. Now it's time to prove you didn't waste their time. 😤</p>
+      <ul class="rules">
+        <li>🏏 <span><strong>20 questions</strong>, all Multiple Choice (2 options each)</span></li>
+        <li>⭐ <span>Each correct answer = <strong>5 marks</strong> (Total: 100 marks)</span></li>
+        <li>✅ <span>Pass mark: <strong>13 correct</strong> answers (65 marks)</span></li>
+        <li>🚫 <span>No googling. Your friend is watching you. Probably.</span></li>
+        <li>⏰ <span>No timer. We're not monsters. Breathe.</span></li>
+      </ul>
+      <button class="start-btn" onclick="startQuiz()">🏏 LET'S PLAY CRICKET</button>
     </div>
-    <div class="click-count" id="clickCount">tap to awaken</div>
   </div>
 
-  <p class="seed-prompt" id="seedPrompt">✦ click the seed ✦</p>
-</div>
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" style="display:none">
+    <!-- Scoreboard -->
+    <div class="scoreboard">
+      <div class="score-item">
+        <div class="score-label">Score</div>
+        <div class="score-value" id="score-disp">0</div>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item">
+        <div class="score-label">Correct</div>
+        <div class="score-value" id="correct-disp">0</div>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item">
+        <div class="score-label">Wrong</div>
+        <div class="score-value" id="wrong-disp" style="color:#e74c3c">0</div>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item">
+        <div class="score-label">Question</div>
+        <div class="score-value" id="q-disp">1/20</div>
+      </div>
+    </div>
 
-<!-- ═══ SCREEN 2: BLOOM ═══ -->
-<div class="screen" id="screen-bloom">
-  <canvas id="bloom-canvas"></canvas>
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progress</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
 
-  <p class="bloom-eyebrow">Happy International Women's Day</p>
-  <div class="bloom-title bloom-content">
-    <span class="women">She Blooms.</span>
-    <span class="day">She Rises. She Shines.</span>
+    <!-- Question card -->
+    <div class="question-card" id="question-card">
+      <div class="q-meta">
+        <div class="q-number" id="q-num">01</div>
+        <div class="q-tag" id="q-tag">T20</div>
+      </div>
+      <div class="question-text" id="question-text">Loading question...</div>
+      <div class="options" id="options-container"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">NEXT BALL →</button>
+    </div>
+
+    <!-- Commentary -->
+    <div class="commentary" id="commentary">
+      <strong>🎙️ Ravi Shastri:</strong> <span id="commentary-text">And here we are folks, the big test begins! Can our friend read those notes or not?!</span>
+    </div>
   </div>
 
-  <p class="bloom-message">
-    You are not just one woman — you are every woman who dared,<br>
-    every girl who dreamed, every force that refused to be dimmed.
-  </p>
-
-  <div class="affirmation-track" id="affirmationTrack"></div>
-
-  <div class="final-wish">
-    <p>With love, light & limitless power ✦ 8 March</p>
+  <!-- RESULT SCREEN -->
+  <div id="result-screen">
+    <div class="result-card">
+      <span class="result-emoji" id="result-emoji">🏆</span>
+      <div class="result-title" id="result-title">MAGNIFICENT!</div>
+      <div class="result-subtitle" id="result-subtitle">Harsha Bhogle would be proud.</div>
+      <div class="result-score-big" id="result-score">100</div>
+      <div class="result-score-label">MARKS OUT OF 100</div>
+      <div class="result-stats">
+        <div class="stat-box">
+          <div class="val" id="res-correct">0</div>
+          <div class="lbl">Correct</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="res-wrong">0</div>
+          <div class="lbl">Wrong</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="res-pct">0%</div>
+          <div class="lbl">Accuracy</div>
+        </div>
+      </div>
+      <div class="verdict-strip" id="verdict-strip"></div>
+    </div>
+    <button class="retry-btn" onclick="restartQuiz()">🔄 RETRY (YOU CAN DO BETTER)</button>
   </div>
+
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-// CURSOR
-// ══════════════════════════════════════════════
-const cursor = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursorRing');
-let mx = -100, my = -100;
+const questions = [
+  {
+    tag: "T20",
+    text: "In a T20 match, how many overs does each team get to bat?",
+    options: ["20 overs", "50 overs"],
+    correct: 0
+  },
+  {
+    tag: "BASICS",
+    text: "How many players are there in a cricket team?",
+    options: ["11 players", "9 players"],
+    correct: 0
+  },
+  {
+    tag: "ODI",
+    text: "In an ODI (One Day International), each team bats for a maximum of how many overs?",
+    options: ["50 overs", "20 overs"],
+    correct: 0
+  },
+  {
+    tag: "T20",
+    text: "In T20 cricket, how many overs can a single bowler bowl in one innings?",
+    options: ["4 overs", "10 overs"],
+    correct: 0
+  },
+  {
+    tag: "TEST",
+    text: "How many days can a Test match last at most?",
+    options: ["5 days", "3 days"],
+    correct: 0
+  },
+  {
+    tag: "BASICS",
+    text: "What does it mean when a batsman is 'out LBW'?",
+    options: ["Leg Before Wicket", "Left-hand Bat Warning"],
+    correct: 0
+  },
+  {
+    tag: "T20",
+    text: "In T20 cricket, what is a 'Power Play'?",
+    options: ["First 6 overs with fielding restrictions", "A special super over for bonus runs"],
+    correct: 0
+  },
+  {
+    tag: "ODI",
+    text: "In an ODI, how many Power Play overs are there in total?",
+    options: ["10 overs", "6 overs"],
+    correct: 0
+  },
+  {
+    tag: "BASICS",
+    text: "What is a 'Duck' in cricket?",
+    options: ["A batsman out for 0 runs", "A ball that bounces twice before the batsman"],
+    correct: 0
+  },
+  {
+    tag: "TEST",
+    text: "In Test cricket, how many innings does each team get?",
+    options: ["2 innings", "1 innings"],
+    correct: 0
+  },
+  {
+    tag: "BASICS",
+    text: "How many runs is a 'six' worth?",
+    options: ["6 runs", "4 runs"],
+    correct: 0
+  },
+  {
+    tag: "T20",
+    text: "If scores are tied after 20 overs in a T20, what happens?",
+    options: ["A Super Over is played", "The match is declared a draw"],
+    correct: 0
+  },
+  {
+    tag: "ODI",
+    text: "In an ODI, how many maximum overs can a single bowler bowl?",
+    options: ["10 overs", "5 overs"],
+    correct: 0
+  },
+  {
+    tag: "BASICS",
+    text: "What is the role of the 'wicket keeper' in cricket?",
+    options: ["Stands behind the stumps and catches the ball", "Guards the boundary and stops fours"],
+    correct: 0
+  },
+  {
+    tag: "TEST",
+    text: "What does it mean when a Test match ends in a 'Draw'?",
+    options: ["Neither team wins within the 5 days", "Both teams score the same runs"],
+    correct: 0
+  },
+  {
+    tag: "BASICS",
+    text: "How many stumps form a wicket?",
+    options: ["3 stumps", "2 stumps"],
+    correct: 0
+  },
+  {
+    tag: "T20",
+    text: "Which format is the Indian Premier League (IPL) based on?",
+    options: ["T20", "ODI"],
+    correct: 0
+  },
+  {
+    tag: "ODI",
+    text: "The Cricket World Cup (50-over edition) is played in which format?",
+    options: ["ODI", "T20"],
+    correct: 0
+  },
+  {
+    tag: "BASICS",
+    text: "What is a 'No Ball' in cricket?",
+    options: ["An illegal delivery that gives the batting side a free hit (in limited overs)", "A ball that the batsman refuses to play"],
+    correct: 0
+  },
+  {
+    tag: "TEST",
+    text: "Which is the ONLY format where a team can be forced to 'follow on'?",
+    options: ["Test cricket", "T20 cricket"],
+    correct: 0
+  }
+];
 
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px';
-  cursor.style.top = my + 'px';
-  cursorRing.style.left = mx + 'px';
-  cursorRing.style.top = my + 'px';
-  spawnSparkle(mx, my);
-});
+const correctCommentary = [
+  "Shastri: <em>MAGNIFICENT! That's a six into the stands!</em> 🎉",
+  "Shastri: <em>Textbook shot! Your friend's tutorials really worked, haven't they!</em> ✅",
+  "Shastri: <em>BOWLED 'EM OVER with that correct answer! Brilliant!</em> 🏏",
+  "Shastri: <em>The crowd goes WILD! That's the kind of answer that wins matches!</em> 🔥",
+  "Shastri: <em>What a player! What a player! Absolutely what a player!</em> 🏆",
+  "Shastri: <em>Dhoni-like calmness. You just hit it for six from the last ball!</em> 💥",
+  "Shastri: <em>RIGHT in the slot! BANG! Four on the board!</em> 👏",
+  "Shastri: <em>Even I could not have said it better. And I say everything better.</em> 🎙️",
+  "Shastri: <em>The BOWLER is shell-shocked! Runs on the board, the crowd erupts!</em> 🤩",
+];
 
-let sparkleThrottle = 0;
-function spawnSparkle(x, y) {
-  const now = Date.now();
-  if (now - sparkleThrottle < 60) return;
-  sparkleThrottle = now;
-  const s = document.createElement('div');
-  s.classList.add('sparkle');
-  const size = Math.random() * 6 + 3;
-  const colors = ['#e8607a','#f2a7b8','#d4a853','#c3a6d4','#7a9e7e'];
-  s.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;background:${colors[Math.floor(Math.random()*colors.length)]};`;
-  document.body.appendChild(s);
-  setTimeout(() => s.remove(), 600);
+const wrongCommentary = [
+  "Shastri: <em>Oh no no no. That is a shocking mix up and they're run out!</em> 😬",
+  "Shastri: <em>Bowled him! He didn't even pick that delivery... embarrassing scenes.</em> 😅",
+  "Shastri: <em>That's a wicket! Your friend is not going to be happy about that one.</em> 😂",
+  "Shastri: <em>CAUGHT AT SLIP! That was an absolute dolly. Out.</em> 🤦",
+  "Shastri: <em>He's played on! The ball's hit the stumps via his own bat. Heartbreak.</em> 💔",
+  "Shastri: <em>LBW! Plumb in front! Doesn't even need to go upstairs!</em> 😬",
+  "Shastri: <em>Did he even watch a single match in his life?! The crowd is SILENT.</em> 😶",
+  "Shastri: <em>I've seen better decisions from a pigeon that wandered onto the pitch.</em> 🐦",
+  "Shastri: <em>The umpire's finger is up. No review. No dignity. Nothing.</em> ☝️",
+];
+
+// Funny taunts when the user takes too long
+const thinkingTaunts = [
+  "Still thinking? The ball is going FLAT 🏏",
+  "Bro you were literally just taught this 💀",
+  "The umpire is getting impatient... ⏳",
+  "Even MS Dhoni decided faster than this 🤔",
+  "Just guess lol, 50-50 odds! 🎲",
+  "Your friend is watching. Choose wisely. 👀",
+  "The crowd is asleep. WAKE THEM UP! 😴",
+  "At this rate, the Test match will end first. 🐢",
+  "Hello? Anyone home? 🏠",
+];
+
+let currentQ = 0;
+let score = 0;
+let correct = 0;
+let wrong = 0;
+let answered = false;
+let shuffledOpts = []; // [{text, isCorrect}] in display order
+let thinkingTimer = null;
+
+function startQuiz() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  loadQuestion();
 }
 
-// ══════════════════════════════════════════════
-// STARFIELD
-// ══════════════════════════════════════════════
-const sf = document.getElementById('starfield');
-const sfc = sf.getContext('2d');
-sf.width = innerWidth; sf.height = innerHeight;
-window.addEventListener('resize', () => { sf.width = innerWidth; sf.height = innerHeight; });
+function loadQuestion() {
+  const q = questions[currentQ];
+  answered = false;
+  clearThinkingTimer();
 
-const stars = Array.from({length: 220}, () => ({
-  x: Math.random() * innerWidth,
-  y: Math.random() * innerHeight,
-  r: Math.random() * 1.5 + 0.3,
-  speed: Math.random() * 0.3 + 0.05,
-  twinkle: Math.random() * Math.PI * 2
-}));
+  document.getElementById('q-num').textContent = String(currentQ + 1).padStart(2, '0');
+  document.getElementById('q-tag').textContent = q.tag;
+  document.getElementById('question-text').textContent = q.text;
+  document.getElementById('q-disp').textContent = `${currentQ + 1}/20`;
 
-function drawStars(t) {
-  sfc.clearRect(0, 0, sf.width, sf.height);
-  stars.forEach(s => {
-    s.twinkle += 0.02;
-    const alpha = 0.3 + Math.sin(s.twinkle) * 0.4;
-    sfc.beginPath();
-    sfc.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    sfc.fillStyle = `rgba(253,246,238,${alpha})`;
-    sfc.fill();
-    s.y += s.speed;
-    if (s.y > sf.height) { s.y = 0; s.x = Math.random() * sf.width; }
+  const pct = Math.round((currentQ / 20) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+
+  // Build options with isCorrect flag, then Fisher-Yates shuffle for true randomness
+  shuffledOpts = q.options.map((text, i) => ({ text, isCorrect: i === q.correct }));
+  for (let i = shuffledOpts.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledOpts[i], shuffledOpts[j]] = [shuffledOpts[j], shuffledOpts[i]];
+  }
+
+  shuffledOpts.forEach((opt, displayIdx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt.text;
+    btn.dataset.displayIdx = displayIdx;
+    btn.onclick = () => selectAnswer(displayIdx);
+    container.appendChild(btn);
   });
-  requestAnimationFrame(drawStars);
-}
-requestAnimationFrame(drawStars);
 
-// ══════════════════════════════════════════════
-// SEED CRACK MECHANIC
-// ══════════════════════════════════════════════
-const seedShell = document.getElementById('seedShell');
-const clickCount = document.getElementById('clickCount');
-const MAX_CLICKS = 7;
-let clicks = 0;
+  document.getElementById('next-btn').classList.remove('visible');
 
-const CRACK_LINES = [
-  {w:2,h:35, top:'18%', left:'48%', rot: 15},
-  {w:2,h:28, top:'30%', left:'55%', rot: -20},
-  {w:2,h:42, top:'25%', left:'38%', rot: 35},
-  {w:2,h:22, top:'50%', left:'60%', rot: -10},
-  {w:2,h:30, top:'45%', left:'30%', rot: 25},
-  {w:2,h:20, top:'60%', left:'50%', rot: -30},
-  {w:2,h:38, top:'35%', left:'45%', rot: 50},
-];
+  // Animate card
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'cardSlide 0.4s cubic-bezier(0.4,0,0.2,1) both';
 
-const CLICK_TEXTS = [
-  'tap to awaken', 'she stirs…', 'she feels it…', 'she is rising…', 'almost there…', 'she is ready…', 'she blooms! ✦'
-];
-
-seedShell.addEventListener('click', e => {
-  if (clicks >= MAX_CLICKS) return;
-  clicks++;
-
-  // Ripple
-  const ripple = document.createElement('div');
-  ripple.classList.add('ripple-ring');
-  seedShell.appendChild(ripple);
-  setTimeout(() => ripple.remove(), 900);
-
-  // Crack
-  if (clicks <= CRACK_LINES.length) {
-    const c = CRACK_LINES[clicks - 1];
-    const line = document.createElement('div');
-    line.classList.add('crack');
-    line.style.cssText = `width:${c.w}px;height:${c.h}px;top:${c.top};left:${c.left};transform:rotate(${c.rot}deg);background:linear-gradient(to bottom, #d4a853, #e8607a);border-radius:2px;animation:crack-appear 0.3s ease forwards;`;
-    seedShell.appendChild(line);
-  }
-
-  // Shake
-  seedShell.style.animation = 'shake 0.4s ease';
-  setTimeout(() => seedShell.style.animation = '', 400);
-
-  // Progress
-  const prog = (clicks / MAX_CLICKS) * 100;
-  seedShell.style.boxShadow = `0 0 ${40 + clicks * 12}px #e8607a${Math.floor(clicks * 36).toString(16).padStart(2,'0')}, inset 0 1px 0 #ffffff11`;
-  clickCount.textContent = CLICK_TEXTS[clicks - 1];
-
-  // Particles
-  for (let i = 0; i < 8; i++) spawnParticle(e.clientX, e.clientY);
-
-  // Bloom!
-  if (clicks === MAX_CLICKS) {
-    setTimeout(triggerBloom, 600);
-  }
-});
-
-function spawnParticle(x, y) {
-  const p = document.createElement('div');
-  p.classList.add('particle');
-  const size = Math.random() * 10 + 4;
-  const angle = Math.random() * Math.PI * 2;
-  const dist = Math.random() * 120 + 40;
-  const colors = ['#e8607a','#f2a7b8','#d4a853','#c3a6d4','#fdf6ee','#7a9e7e'];
-  const dur = Math.random() * 0.6 + 0.4;
-  p.style.cssText = `
-    width:${size}px;height:${size}px;
-    left:${x}px;top:${y}px;
-    background:${colors[Math.floor(Math.random()*colors.length)]};
-    --px:${Math.cos(angle)*dist}px;
-    --py:${Math.sin(angle)*dist}px;
-    --p-dur:${dur}s;
-    --p-del:0s;
-  `;
-  document.body.appendChild(p);
-  setTimeout(() => p.remove(), (dur + 0.1) * 1000);
+  // Start the thinking taunt timer after 6 seconds of inactivity
+  thinkingTimer = setTimeout(showThinkingTaunt, 6000);
 }
 
-// ══════════════════════════════════════════════
-// BLOOM TRANSITION
-// ══════════════════════════════════════════════
-function triggerBloom() {
-  // Big particle explosion
-  const cx = innerWidth / 2, cy = innerHeight / 2;
+function showThinkingTaunt() {
+  if (answered) return;
+  const taunt = thinkingTaunts[Math.floor(Math.random() * thinkingTaunts.length)];
+  const fb = document.getElementById('feedback');
+  fb.textContent = '⏱️ ' + taunt;
+  fb.className = 'feedback taunt-fb show';
+  setTimeout(() => fb.classList.remove('show'), 2500);
+  thinkingTimer = setTimeout(showThinkingTaunt, 8000);
+}
+
+function clearThinkingTimer() {
+  if (thinkingTimer) { clearTimeout(thinkingTimer); thinkingTimer = null; }
+}
+
+function selectAnswer(displayIdx) {
+  if (answered) return;
+  answered = true;
+  clearThinkingTimer();
+
+  const chosen = shuffledOpts[displayIdx];
+  const buttons = document.querySelectorAll('.option-btn');
+
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.displayIdx);
+    const opt = shuffledOpts[idx];
+    if (opt.isCorrect) {
+      btn.classList.add(chosen.isCorrect ? 'correct' : 'reveal-correct');
+    }
+    if (idx === displayIdx && !chosen.isCorrect) {
+      btn.classList.add('wrong');
+    }
+  });
+
+  if (chosen.isCorrect) {
+    score += 5;
+    correct++;
+    document.getElementById('score-disp').textContent = score;
+    document.getElementById('correct-disp').textContent = correct;
+    showFeedback(true);
+    const c = correctCommentary[Math.floor(Math.random() * correctCommentary.length)];
+    document.getElementById('commentary-text').innerHTML = c;
+    document.getElementById('commentary').style.borderLeftColor = '#27ae60';
+  } else {
+    wrong++;
+    document.getElementById('wrong-disp').textContent = wrong;
+    showFeedback(false);
+    const w = wrongCommentary[Math.floor(Math.random() * wrongCommentary.length)];
+    document.getElementById('commentary-text').innerHTML = w;
+    document.getElementById('commentary').style.borderLeftColor = '#e74c3c';
+  }
+
+  document.getElementById('next-btn').classList.add('visible');
+}
+
+function showFeedback(isCorrect) {
+  const msgs_correct = [
+    "✅ CORRECT! Take a bow!",
+    "🎉 CLEAN HIT!",
+    "💥 SIX! Nailed it!",
+    "🏏 Pure class!",
+    "🔥 PERFECT!",
+    "🥇 Your friend is smiling somewhere.",
+    "😤 Knew it? Or got lucky? We'll never know.",
+  ];
+  const msgs_wrong = [
+    "❌ WRONG. Yikes.",
+    "😬 OUT! Caught in the deep.",
+    "🤦 Bowled 'em! Terrible shot.",
+    "💀 LBW! Not even close.",
+    "😂 Oh dear oh dear.",
+    "🫠 Your friend just cried a little.",
+    "🤡 Even the pigeon knew that one.",
+    "☠️ Umpire's finger is up. Depart.",
+  ];
+  const fb = document.getElementById('feedback');
+  fb.textContent = isCorrect
+    ? msgs_correct[Math.floor(Math.random() * msgs_correct.length)]
+    : msgs_wrong[Math.floor(Math.random() * msgs_wrong.length)];
+  fb.className = 'feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb') + ' show';
+  setTimeout(() => fb.classList.remove('show'), 2200);
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= questions.length) {
+    showResult();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'block';
+
+  const passed = correct >= 13;
+  const pct = Math.round((correct / 20) * 100);
+
+  document.getElementById('result-score').textContent = score;
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = wrong;
+  document.getElementById('res-pct').textContent = pct + '%';
+
+  const progress = document.getElementById('progress-fill');
+  progress.style.width = '100%';
+  document.getElementById('progress-pct').textContent = '100%';
+
+  let emoji, title, subtitle;
+  if (correct === 20) {
+    emoji = '🏆'; title = 'LEGEND STATUS'; subtitle = 'Okay you cheated. Nobody gets 20/20. Nobody.';
+  } else if (correct >= 17) {
+    emoji = '🌟'; title = 'ABSOLUTE UNIT'; subtitle = "Virat Kohli has left the chat. You're better.";
+  } else if (correct >= 13) {
+    emoji = '🎉'; title = 'YOU PASSED!'; subtitle = "Your friend's cricket lectures weren't wasted after all!";
+  } else if (correct >= 9) {
+    emoji = '😬'; title = 'SO CLOSE...'; subtitle = 'You got the vibes but not the knowledge. Try again.';
+  } else if (correct >= 5) {
+    emoji = '💀'; title = 'ROUGH INNINGS'; subtitle = "Did you even read the notes? Your friend is crying somewhere.";
+  } else {
+    emoji = '🏏'; title = 'DUCK OUT'; subtitle = "Zero. Less than zero spiritually. Ask your friend to teach you again. Slowly.";
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-subtitle').textContent = subtitle;
+
+  const verdict = document.getElementById('verdict-strip');
+  if (passed) {
+    verdict.className = 'verdict-strip verdict-pass';
+    verdict.textContent = `✅ PASSED! You got ${correct}/20 correct. Minimum was 13. Your friend is proud (maybe).`;
+    launchConfetti();
+  } else {
+    verdict.className = 'verdict-strip verdict-fail';
+    verdict.textContent = `❌ FAILED. You needed 13 correct, you got ${correct}. Your friend wants their cricket lessons back.`;
+  }
+}
+
+function launchConfetti() {
+  const colors = ['#f39c12','#27ae60','#c0392b','#3498db','#9b59b6','#1a472a','#fef9ef'];
   for (let i = 0; i < 80; i++) {
-    setTimeout(() => spawnParticle(cx, cy), Math.random() * 400);
-  }
-
-  // Flash
-  const flash = document.getElementById('flashOverlay');
-  flash.classList.add('flash');
-
-  setTimeout(() => {
-    document.getElementById('screen-seed').classList.remove('active');
-    document.getElementById('screen-bloom').classList.add('active');
-    spawnPetals();
-    initBloomCanvas();
-  }, 500);
-}
-
-// ══════════════════════════════════════════════
-// PETALS
-// ══════════════════════════════════════════════
-const PETAL_SHAPES = ['🌸','🌺','🌹','🌷','✿','❀','🍀','✦','⭐','💫'];
-
-function spawnPetals() {
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.classList.add('petal');
-    p.textContent = PETAL_SHAPES[Math.floor(Math.random() * PETAL_SHAPES.length)];
-    const dur = Math.random() * 8 + 6;
-    const del = Math.random() * 10;
-    const drift = (Math.random() - 0.5) * 200;
-    p.style.cssText = `
-      left: ${Math.random() * 110 - 5}%;
-      top: -30px;
-      font-size: ${Math.random() * 16 + 12}px;
-      --fall-dur: ${dur}s;
-      --fall-del: ${del}s;
-      --drift: ${drift}px;
-      filter: hue-rotate(${Math.random()*60-30}deg);
-    `;
-    document.body.appendChild(p);
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.width = (Math.random() * 10 + 6) + 'px';
+    el.style.height = (Math.random() * 10 + 6) + 'px';
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    el.style.animationDuration = (Math.random() * 2.5 + 2) + 's';
+    el.style.animationDelay = (Math.random() * 1.5) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4500);
   }
 }
 
-// ══════════════════════════════════════════════
-// BLOOM CANVAS — Generative flower
-// ══════════════════════════════════════════════
-function initBloomCanvas() {
-  const canvas = document.getElementById('bloom-canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-
-  const flowers = [];
-  const FLOWER_COLORS = [
-    ['#e8607a','#f2a7b8','#1a0a14'],
-    ['#d4a853','#f5d07a','#1a1200'],
-    ['#c3a6d4','#e0c8f0','#0f0a14'],
-    ['#7a9e7e','#b2d4b4','#0a1a10'],
-    ['#f07060','#f8b0a0','#180a0a'],
-  ];
-
-  class Flower {
-    constructor(x, y, delay) {
-      this.x = x; this.y = y;
-      this.delay = delay;
-      this.progress = 0;
-      this.petals = Math.floor(Math.random() * 3) + 5;
-      this.maxR = Math.random() * 60 + 30;
-      this.colors = FLOWER_COLORS[Math.floor(Math.random() * FLOWER_COLORS.length)];
-      this.rotation = Math.random() * Math.PI * 2;
-      this.speed = Math.random() * 0.008 + 0.005;
-      this.started = false;
-    }
-    draw(t) {
-      if (t < this.delay) return;
-      if (!this.started) this.started = true;
-      if (this.progress < 1) this.progress = Math.min(1, this.progress + this.speed);
-
-      const p = easeOut(this.progress);
-      const r = this.maxR * p;
-      const cx = this.x, cy = this.y;
-
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(this.rotation + t * 0.0002);
-
-      // Petals
-      for (let i = 0; i < this.petals; i++) {
-        const angle = (i / this.petals) * Math.PI * 2;
-        ctx.save();
-        ctx.rotate(angle);
-        const grad = ctx.createRadialGradient(0, -r * 0.5, 0, 0, -r * 0.5, r * 0.9);
-        grad.addColorStop(0, this.colors[0] + 'dd');
-        grad.addColorStop(0.6, this.colors[1] + '99');
-        grad.addColorStop(1, this.colors[0] + '00');
-        ctx.beginPath();
-        ctx.ellipse(0, -r * 0.55, r * 0.22, r * 0.45, 0, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-        ctx.restore();
-      }
-
-      // Center
-      const cGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 0.22);
-      cGrad.addColorStop(0, '#fdf6ee');
-      cGrad.addColorStop(0.5, this.colors[0]);
-      cGrad.addColorStop(1, this.colors[2]);
-      ctx.beginPath();
-      ctx.arc(0, 0, r * 0.22, 0, Math.PI * 2);
-      ctx.fillStyle = cGrad;
-      ctx.fill();
-
-      ctx.restore();
-    }
-  }
-
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
-  // Spawn flowers at key positions
-  const positions = [
-    [0.15, 0.8], [0.85, 0.75], [0.08, 0.3], [0.92, 0.25],
-    [0.3, 0.9], [0.7, 0.85], [0.5, 0.95],
-    [0.02, 0.6], [0.98, 0.55], [0.25, 0.15], [0.75, 0.1]
-  ];
-  positions.forEach((pos, i) => {
-    flowers.push(new Flower(pos[0] * innerWidth, pos[1] * innerHeight, i * 0.5));
-  });
-
-  let t = 0;
-  function render() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    t += 1;
-    flowers.forEach(f => f.draw(t));
-    requestAnimationFrame(render);
-  }
-  render();
+function restartQuiz() {
+  currentQ = 0; score = 0; correct = 0; wrong = 0; answered = false;
+  clearThinkingTimer();
+  document.getElementById('score-disp').textContent = '0';
+  document.getElementById('correct-disp').textContent = '0';
+  document.getElementById('wrong-disp').textContent = '0';
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('commentary-text').textContent = "And here we are folks, the big test begins! Can our friend read those notes or not?!";
+  document.getElementById('commentary').style.borderLeftColor = 'var(--accent)';
+  loadQuestion();
 }
-
-// ══════════════════════════════════════════════
-// AFFIRMATION CARDS
-// ══════════════════════════════════════════════
-const AFFIRMATIONS = [
-  { icon: '🔥', word: 'Fierce', desc: 'Your fire cannot be put out', color: '#e8607a', bg: '#e8607a' },
-  { icon: '🌙', word: 'Wise', desc: 'Ancient knowing lives in you', color: '#c3a6d4', bg: '#c3a6d4' },
-  { icon: '🌿', word: 'Resilient', desc: 'You bend but never break', color: '#7a9e7e', bg: '#7a9e7e' },
-  { icon: '✨', word: 'Radiant', desc: 'Your light is unstoppable', color: '#d4a853', bg: '#d4a853' },
-  { icon: '💎', word: 'Rare', desc: 'There is nobody like you', color: '#6b9ed4', bg: '#6b9ed4' },
-  { icon: '🦋', word: 'Free', desc: 'You were born to soar', color: '#f07060', bg: '#f07060' },
-  { icon: '🌺', word: 'Blooming', desc: 'Always becoming more', color: '#f2a7b8', bg: '#f2a7b8' },
-  { icon: '⚡', word: 'Powerful', desc: 'Worlds change because of you', color: '#f5d07a', bg: '#f5d07a' },
-];
-
-const track = document.getElementById('affirmationTrack');
-AFFIRMATIONS.forEach((a, i) => {
-  const card = document.createElement('div');
-  card.classList.add('aff-card');
-  card.style.cssText = `
-    --card-bg: ${a.bg};
-    --dur: ${3.5 + i * 0.3}s;
-    --del: ${i * 0.2}s;
-    border-color: ${a.color}33;
-    box-shadow: 0 8px 40px ${a.color}22, inset 0 1px 0 ${a.color}22;
-  `;
-  card.innerHTML = `
-    <span class="card-icon">${a.icon}</span>
-    <span class="card-word" style="color:${a.color}">${a.word}</span>
-    <span class="card-desc">${a.desc}</span>
-  `;
-  card.addEventListener('click', () => {
-    for (let j = 0; j < 15; j++) spawnParticle(
-      card.getBoundingClientRect().left + card.offsetWidth / 2,
-      card.getBoundingClientRect().top + card.offsetHeight / 2
-    );
-  });
-  track.appendChild(card);
-});
-
-// Touch support for seed
-seedShell.addEventListener('touchstart', e => {
-  e.preventDefault();
-  seedShell.click();
-}, {passive: false});
 </script>
 </body>
 </html>
